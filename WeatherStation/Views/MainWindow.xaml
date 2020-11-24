@@ -5,7 +5,6 @@
     xmlns:core="clr-namespace:WeatherStation.Core;assembly=WeatherStation.Core"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:prism="http://prismlibrary.com/"
-    Title="{Binding Title}"
     Width="1280"
     Height="720"
     prism:ViewModelLocator.AutoWireViewModel="True"
@@ -28,8 +27,28 @@
             Identifier="RootDialog"
             SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
             <materialDesign:DialogHost.DialogContent>
-                <Grid Margin="25">
-                    <TextBlock Text="My first Dialog" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <ProgressBar
+                        Grid.Column="0"
+                        Width="50"
+                        Height="50"
+                        Margin="50"
+                        IsIndeterminate="True"
+                        Style="{StaticResource MaterialDesignCircularProgressBar}"
+                        Value="0" />
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="50"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        Text="Осуществляем поиск устройства." />
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
 
