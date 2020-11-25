@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace WeatherStation.Services.CommunicationService
 {
@@ -6,12 +8,14 @@ namespace WeatherStation.Services.CommunicationService
     {
         event EventHandler<string> DataRecived;
 
-        void Open(string namePort);
+        void OpenPort(string namePort);
 
-        void Close(string namePort);
+        void ClosePort(string namePort);
 
         void SendData(byte[] inputArray);
 
         string[] GetNamePorts();
+
+        Task<byte[]> ConnectDeviceAsync(CancellationToken ct);
     }
 }

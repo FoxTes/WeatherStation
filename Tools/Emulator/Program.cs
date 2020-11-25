@@ -6,10 +6,11 @@ namespace Emulator
     class Program
     {
         public static SerialPort _serialPort;
+
         static void Main(string[] args)
         {
             _serialPort = new SerialPort("COM7", 9600);
-            _serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+
             try
             {
                 _serialPort.Open();
@@ -20,31 +21,36 @@ namespace Emulator
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Не удалось открыть порт.");
+
                 Console.ReadLine();
-            }  
+            }
+            finally
+            {
+                _serialPort.DiscardInBuffer();
+                _serialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+            }
 
             Console.WriteLine("Press any key to continue...");
-            Console.WriteLine();
             Console.ReadKey();
             _serialPort.Close();
         }
 
-        private static void DataReceivedHandler(
-                            object sender,
-                            SerialDataReceivedEventArgs e)
+        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialPort sp = (SerialPort)sender;
-            var countByte = sp.ReadBufferSize;
+            var countByte = _serialPort.BytesToRead;
+            var data = new byte[_serialPort.BytesToRead];
+            _serialPort.Read(data, 0, countByte);
 
-            if (countByte != 3)
+            if (data.Length != 3)
                 return;
-                
-            string indata = sp.ReadExisting();
-            Console.WriteLine("Data Received");
 
-            _serialPort.WriteLine("Метиостанция- 1");
+            foreach (var item in data)
+            {
+                Console.WriteLine(item);
+            }
 
-            Console.Write(indata.ToString());
+            Console.WriteLine("Metiostantion-1");
+            _serialPort.WriteLine("Metiostantion-1");
         }
     }
 }

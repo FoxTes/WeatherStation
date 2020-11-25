@@ -1,19 +1,41 @@
-﻿using Prism.Mvvm;
+﻿using MaterialDesignThemes.Wpf;
+using Prism.Commands;
+using Prism.Events;
+using Prism.Mvvm;
+using WeatherStation.Core;
 
 namespace WeatherStation.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title = "Prism Application";
-        public string Title
+        IEventAggregator _ea;
+
+        private bool _dialogsIsOpen = false;
+        public bool DialogsIsOpen
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get { return _dialogsIsOpen; }
+            set { SetProperty(ref _dialogsIsOpen, value); }
+        }
+        public DelegateCommand SeachDevice { get; private set; }
+        public DialogClosingEventHandler DialogClosingHandler { get; }
+
+        public MainWindowViewModel(IEventAggregator ea)
+        {
+            _ea = ea;
+            SeachDevice = new DelegateCommand(SendMessage);
+            DialogClosingHandler = OnDialogClosing;
         }
 
-        public MainWindowViewModel()
+        private void SendMessage()
         {
+            DialogsIsOpen = true;
+            _ea.GetEvent<MessageSentEvent>().Publish(DialogsIsOpen);
+        }
 
+        private void OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            DialogsIsOpen = false;
+            _ea.GetEvent<MessageSentEvent>().Publish(DialogsIsOpen);
         }
     }
 }
