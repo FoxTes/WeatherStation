@@ -2,7 +2,11 @@
 
 namespace WeatherStation.Core
 {
-    public class MessageSentEvent : PubSubEvent<bool>
+    public class MessageRequest : PubSubEvent<bool>
+    {
+    }
+
+    public class MessageAnswer : PubSubEvent<string>
     {
     }
 }

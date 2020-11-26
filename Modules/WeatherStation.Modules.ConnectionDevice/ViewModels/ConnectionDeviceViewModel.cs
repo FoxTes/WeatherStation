@@ -14,12 +14,14 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
     public class ConnectionDeviceViewModel : RegionViewModelBase
     {
         #region Filed
-        private readonly IEventAggregator _eventAggregator;
-        private readonly ICommunicationService _communicationService;
+        private readonly IEventAggregator _eventAggregator = null;
+        private readonly ICommunicationService _communicationService = null;
 
-        private string _nameConnectionDevice = "NameConnectionDevice";
-        private string _connectionStatus = "Не подключено";
+        private string _nameConnectionDevice = null;
         private string _countReciveParcel = null;
+        private string _connectionStatus = "Не подключено";
+
+        private CancellationTokenSource _cancellationTokenSource = null;
         #endregion
 
         #region Property
@@ -48,51 +50,55 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
             _eventAggregator = eventAggregator;
             _communicationService = communicationService;
 
-            _eventAggregator.GetEvent<MessageSentEvent>().Subscribe(MessageReceived);
-
-            //Task.Run(() =>
-            //{
-            //    var result = _communicationService.ConnectDeviceAsync().Result;
-            //    if (result != null)
-            //    {
-            //        NameConnectionDevice = System.Text.Encoding.Default.GetString(result);
-            //    }
-            //});
+            _eventAggregator.GetEvent<MessageRequest>().Subscribe(RequestSearchDevice);
         }
 
-        private void MessageReceived(bool command)
+        private async void RequestSearchDevice(bool request)
         {
-            var tokenSource = new CancellationTokenSource();
-            var token = tokenSource.Token;
-
-            var task = new Task(() =>
+            if (request)
             {
-                var result = _communicationService.ConnectDeviceAsync(token).Result;
-                if (result != null)
+                try
                 {
-                    NameConnectionDevice = System.Text.Encoding.Default.GetString(result);
-                }
-            });
+                    _cancellationTokenSource = new CancellationTokenSource();
+                    var result = await _communicationService.SeachDeviceAsync(_cancellationTokenSource.Token);
 
-            if (command)
-            {
-                task.Start();
+                    if (result is null)
+                    {
+                        SetPropertyNoSeachDevice();
+                        _eventAggregator.GetEvent<MessageAnswer>().Publish("");
+                    }
+                    else
+                    {
+                        SetPropertySeachDevice(result);
+                        _eventAggregator.GetEvent<MessageAnswer>().Publish(result);
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    SetPropertyNoSeachDevice();
+                    _eventAggregator.GetEvent<MessageAnswer>().Publish(null);
+                }
+                finally
+                {
+                    _cancellationTokenSource = null;
+                }
             }
             else
-            {
-                if (task.Status == TaskStatus.Running)
-                    tokenSource.Cancel();
-            }
+                _cancellationTokenSource?.Cancel();
         }
-
-        #endregion
-
-        #region Command
-        #endregion
-
-        public override void OnNavigatedTo(NavigationContext navigationContext)
+        private void SetPropertyNoSeachDevice()
         {
-
+            NameConnectionDevice = null;
+            CountReciveParcel = null;
+            ConnectionStatus = "Не подключено";
         }
+
+        private void SetPropertySeachDevice(string result)
+        {
+            NameConnectionDevice = result;
+            CountReciveParcel = "Кол-во принятых посылок: 0";
+            ConnectionStatus = "Устройство подключено";
+        }
+        #endregion
     }
 }

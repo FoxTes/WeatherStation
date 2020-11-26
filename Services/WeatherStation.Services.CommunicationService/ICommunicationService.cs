@@ -6,16 +6,12 @@ namespace WeatherStation.Services.CommunicationService
 {
     public interface ICommunicationService
     {
-        event EventHandler<string> DataRecived;
-
-        void OpenPort(string namePort);
-
-        void ClosePort(string namePort);
-
-        void SendData(byte[] inputArray);
-
-        string[] GetNamePorts();
-
-        Task<byte[]> ConnectDeviceAsync(CancellationToken ct);
+        /// <summary>
+        /// Поиск подключенного прибора.
+        /// </summary>
+        /// <param name="cancellationToken">Токен для отмены опреации.</param>
+        /// <param name="progress">Прогресс поиска.</param>
+        /// <returns>Имя устройства.</returns>
+        Task<string> SeachDeviceAsync(CancellationToken cancellationToken, IProgress<byte> progress = null);
     }
 }

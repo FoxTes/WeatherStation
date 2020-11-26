@@ -15,43 +15,46 @@
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="40" />
-        </Grid.RowDefinitions>
 
-        <materialDesign:DialogHost 
-            IsOpen="{Binding DialogsIsOpen}"
-            CloseOnClickAway="True"
-            DialogTheme="Dark"
-            Identifier="RootDialog">
-            <materialDesign:DialogHost.DialogContent>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+    <materialDesign:DialogHost
+        Grid.Row="0"
+        CloseOnClickAway="True"
+        DialogClosingCallback="{Binding DialogClosingHandler}"
+        DialogTheme="Dark"
+        Identifier="RootDialog"
+        IsOpen="{Binding DialogsIsOpen}">
+        <materialDesign:DialogHost.DialogContent>
+            <Grid Width="360" Height="170">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
 
-                    <ProgressBar
-                        Grid.Column="0"
-                        Width="50"
-                        Height="50"
-                        Margin="35"
-                        IsIndeterminate="True"
-                        Style="{StaticResource MaterialDesignCircularProgressBar}"
-                        Value="0" />
+                <ProgressBar
+                    Grid.Row="0"
+                    Width="60"
+                    Height="60"
+                    Margin="150,30,150,0"
+                    VerticalAlignment="Bottom"
+                    IsIndeterminate="True"
+                    Style="{StaticResource MaterialDesignCircularProgressBar}"
+                    Value="0" />
 
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="35"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="18"
-                        Text="Осуществляем поиск устройства." />
-                </Grid>
-                
-            </materialDesign:DialogHost.DialogContent>
+                <TextBlock
+                    Grid.Row="1"
+                    Height="22"
+                    Margin="35,25,35,30"
+                    VerticalAlignment="Bottom"
+                    FontSize="18"
+                    Text="Осуществляем поиск устройства" />
+            </Grid>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
 
             <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
                 <materialDesign:DrawerHost.LeftDrawerContent>
@@ -82,6 +85,7 @@
                         </ListBox>
                     </DockPanel>
                 </materialDesign:DrawerHost.LeftDrawerContent>
+
                 <DockPanel>
                     <materialDesign:ColorZone
                         Padding="12"
@@ -133,23 +137,16 @@
                                 Text="WeatherStation" />
                         </DockPanel>
                     </materialDesign:ColorZone>
-
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                    </Grid>
                 </DockPanel>
             </materialDesign:DrawerHost>
 
-        </materialDesign:DialogHost>
+            <materialDesign:Card Grid.Row="1">
+                <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+            </materialDesign:Card>
 
-        <materialDesign:Snackbar Message="Hello World" IsActive="True" />
+            <materialDesign:Snackbar HorizontalAlignment="Center" MessageQueue="{Binding MessageQueue}" />
+        </Grid>
+    </materialDesign:DialogHost>
 
-        <materialDesign:Card Grid.Row="1">
-            <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
-        </materialDesign:Card>
 
-    </Grid>
 </Window>

@@ -49,8 +49,8 @@ namespace Emulator
                 Console.WriteLine(item);
             }
 
-            Console.WriteLine("Metiostantion-1");
-            _serialPort.WriteLine("Metiostantion-1");
+            Console.WriteLine("Meteostation-01");
+            _serialPort.WriteLine("Meteostation-01");
         }
     }
 }

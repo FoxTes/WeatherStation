@@ -18,9 +18,8 @@
 
         <TextBlock
             Grid.Column="0"
-            Margin="20,0,0,0"
+            Margin="20,12,0,12"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
             Text="{Binding NameConnectionDevice}" />
         <TextBlock
             Grid.Column="1"
@@ -33,6 +32,6 @@
             Margin="0,0,20,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Text="{Binding CountReciveParcel}"  />
+            Text="{Binding CountReciveParcel}" />
     </Grid>
 </UserControl>
