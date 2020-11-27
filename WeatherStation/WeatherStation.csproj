@@ -12,8 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Modules\WeatherStation.Modules.ConnectionDevice\WeatherStation.Modules.ConnectionDevice.csproj" />
     <ProjectReference Include="..\WeatherStation.Core\WeatherStation.Core.csproj" />
-    <ProjectReference Include="..\Modules\WeatherStation.Modules.ModuleName\WeatherStation.Modules.ModuleName.csproj" />
-    <ProjectReference Include="..\Services\WeatherStation.Services.Interfaces\WeatherStation.Services.Interfaces.csproj" />
-    <ProjectReference Include="..\Services\WeatherStation.Services\WeatherStation.Services.csproj" />
+    <ProjectReference Include="..\WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj" />
+    <ProjectReference Include="..\WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj" />
   </ItemGroup>
 </Project>

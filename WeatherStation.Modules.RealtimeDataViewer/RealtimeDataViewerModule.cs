@@ -3,25 +3,25 @@ using Prism.Modularity;
 using Prism.Regions;
 using WeatherStation.Core;
 
-namespace WeatherStation.Modules.ConnectionDevice
+namespace WeatherStation.Modules.RealtimeDataViewer
 {
-    public class ConnectionDeviceModule : IModule
+    public class RealtimeDataViewerModule : IModule
     {
         private readonly IRegionManager _regionManager;
 
-        public ConnectionDeviceModule(IRegionManager regionManager)
+        public RealtimeDataViewerModule(IRegionManager regionManager)
         {
             _regionManager = regionManager;
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.StatusBarBottom, "ConnectionDevice");
+            _regionManager.RequestNavigate(RegionNames.MainContent, "RealtimeDataViewer");
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<Views.ConnectionDevice>();
+            containerRegistry.RegisterForNavigation<Views.RealtimeDataViewer>();
         }
     }
 }

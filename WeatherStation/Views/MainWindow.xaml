@@ -111,7 +111,10 @@
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal">
                                         <TextBlock Margin="0,0,10,0" Text="Light" />
-                                        <ToggleButton x:Name="DarkModeToggleButton" Command="{Binding ChangeTheme}"  IsChecked="{Binding DarkModeIsEnable}" />
+                                        <ToggleButton
+                                            x:Name="DarkModeToggleButton"
+                                            Command="{Binding ChangeTheme}"
+                                            IsChecked="{Binding DarkModeIsEnable}" />
                                         <TextBlock Margin="10,0,0,0" Text="Dark" />
                                     </StackPanel>
 
@@ -137,11 +140,13 @@
                                 Text="WeatherStation" />
                         </DockPanel>
                     </materialDesign:ColorZone>
+
+                    <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.MainContent}" />
                 </DockPanel>
             </materialDesign:DrawerHost>
 
             <materialDesign:Card Grid.Row="1">
-                <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.ContentRegion}" />
+                <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.StatusBarBottom}" />
             </materialDesign:Card>
 
             <materialDesign:Snackbar HorizontalAlignment="Center" MessageQueue="{Binding MessageQueue}" />

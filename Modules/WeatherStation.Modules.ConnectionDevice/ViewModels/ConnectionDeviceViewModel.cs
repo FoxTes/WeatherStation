@@ -5,8 +5,8 @@ using System.Threading;
 using WeatherStation.Core;
 using WeatherStation.Core.Mvvm;
 using WeatherStation.Services.CommunicationService;
-using WeatherStation.Services.CommunicationService.Data;
 using WeatherStation.Services.CommunicationService.Enum;
+using WeatherStation.Services.CommunicationService.Model;
 
 namespace WeatherStation.Modules.ConnectionDevice.ViewModels
 {
@@ -56,6 +56,7 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
         }
         #endregion
 
+        #region Method
         private void ConnectionChanged(object sender, ConnectionStatus e)
         {
             if (e == ConnectionStatus.Disconnect)
@@ -65,7 +66,7 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
             }        
         }
 
-        private void DataRecived(object sender, DataModel e)
+        private void DataRecived(object sender, DataReciveModel e)
         {
             CountReciveFrameLabel = $"Кол-во принятых посылок: {++_countReciveFrame}";
         }
@@ -80,20 +81,13 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
                     var result = await _communicationService.SeachDeviceAsync(_cancellationTokenSource.Token);
 
                     if (result is null)
-                    {
                         SetPropertyNoSeachDevice();
-                        _eventAggregator.GetEvent<MessageAnswer>().Publish("");
-                    }
                     else
-                    {
                         SetPropertySeachDevice(result);
-                        _eventAggregator.GetEvent<MessageAnswer>().Publish(result);
-                    }
                 }
                 catch (OperationCanceledException)
                 {
                     SetPropertyNoSeachDevice();
-                    _eventAggregator.GetEvent<MessageAnswer>().Publish(null);
                 }
                 finally
                 {
@@ -116,6 +110,7 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
             NameConnectionDeviceLabel = result;
             CountReciveFrameLabel = $"Кол-во принятых посылок: {_countReciveFrame}";
             ConnectionStatusLabel = "Устройство подключено";
-        }  
+        }
+        #endregion
     }
 }

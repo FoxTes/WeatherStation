@@ -42,7 +42,6 @@ namespace WeatherStation.ViewModels
         public MainWindowViewModel(IEventAggregator eventAggregator, ICommunicationService communicationService)
         {
             _eventAggregator = eventAggregator;
-            _eventAggregator.GetEvent<MessageAnswer>().Subscribe(MessageReceivedAnswer);
 
             _communicationService = communicationService;
             _communicationService.ConnectionChanged += ConnectionChanged;
@@ -57,20 +56,17 @@ namespace WeatherStation.ViewModels
 
         private void ConnectionChanged(object sender, ConnectionStatus e)
         {
-            if (e == ConnectionStatus.Disconnect)
-                MessageQueue.Enqueue($"Связь с устройством потеряна!");
-        }
-
-        private void MessageReceivedAnswer(string answer)
-        {
-            DialogsIsOpen = false;
-
-            if (answer is null)
-                MessageQueue.Enqueue("Поиск устройства прерван!");
-            else if (string.IsNullOrEmpty(answer))
-                MessageQueue.Enqueue("Устройство не найдено.");
+            if (DialogsIsOpen)
+            {
+                DialogsIsOpen = false;
+                if (e == ConnectionStatus.Connect)
+                    MessageQueue.Enqueue($"Найдено устройство.");
+                else
+                    MessageQueue.Enqueue("Устройство не найдено.");
+            }
             else
-                MessageQueue.Enqueue($"Найдено устройство - {answer}");
+                if (e == ConnectionStatus.Disconnect)
+                    MessageQueue.Enqueue($"Связь с устройством потеряна!");
         }
 
         private void SendMessage()
@@ -87,6 +83,8 @@ namespace WeatherStation.ViewModels
         private void OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             DialogsIsOpen = false;
+
+            MessageQueue.Enqueue("Поиск устройства прерван!");
             _eventAggregator.GetEvent<MessageRequest>().Publish(false);
         }
 
