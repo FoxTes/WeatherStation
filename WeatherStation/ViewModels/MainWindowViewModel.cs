@@ -4,42 +4,62 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using WeatherStation.Core;
+using WeatherStation.Services.CommunicationService;
+using WeatherStation.Services.CommunicationService.Enum;
 
 namespace WeatherStation.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        IEventAggregator _eventAggregator;
-
-        private SnackbarMessageQueue _messageQueue;
-        public SnackbarMessageQueue MessageQueue
-        {
-            get { return _messageQueue; }
-            set { SetProperty(ref _messageQueue, value); }
-        }
+        #region Filed
+        private readonly IEventAggregator _eventAggregator = null;
+        private readonly ICommunicationService _communicationService = null;
 
         private bool _dialogsIsOpen = false;
+        private bool _darkModeIsEnable = true;
+        #endregion
+
+        #region Property
+        public SnackbarMessageQueue MessageQueue { get; private set; }
+
+        public DelegateCommand SeachDevice { get; private set; }
+
+        public DelegateCommand ChangeTheme { get; private set; }
+        public bool DarkModeIsEnable
+        {
+            get { return _darkModeIsEnable; }
+            set { SetProperty(ref _darkModeIsEnable, value); }
+        }
+
+        public DialogClosingEventHandler DialogClosingHandler { get; }
         public bool DialogsIsOpen
         {
             get { return _dialogsIsOpen; }
             set { SetProperty(ref _dialogsIsOpen, value); }
         }
-        public DelegateCommand SeachDevice { get; private set; }
-        public DialogClosingEventHandler DialogClosingHandler { get; }
+        #endregion
 
-
-
-        public MainWindowViewModel(IEventAggregator eventAggregator)
+        public MainWindowViewModel(IEventAggregator eventAggregator, ICommunicationService communicationService)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<MessageAnswer>().Subscribe(MessageReceivedAnswer);
 
+            _communicationService = communicationService;
+            _communicationService.ConnectionChanged += ConnectionChanged;
+
             SeachDevice = new DelegateCommand(SendMessage);
+            ChangeTheme = new DelegateCommand(ModifyTheme);
 
             DialogClosingHandler = OnDialogClosing;
+
             MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
         }
 
+        private void ConnectionChanged(object sender, ConnectionStatus e)
+        {
+            if (e == ConnectionStatus.Disconnect)
+                MessageQueue.Enqueue($"Связь с устройством потеряна!");
+        }
 
         private void MessageReceivedAnswer(string answer)
         {
@@ -50,19 +70,33 @@ namespace WeatherStation.ViewModels
             else if (string.IsNullOrEmpty(answer))
                 MessageQueue.Enqueue("Устройство не найдено.");
             else
-                MessageQueue.Enqueue($"Найдено устройство {answer}");
+                MessageQueue.Enqueue($"Найдено устройство - {answer}");
         }
 
         private void SendMessage()
         {
-            DialogsIsOpen = true;
-            _eventAggregator.GetEvent<MessageRequest>().Publish(true);
+            if (_communicationService.IsConnected)
+                MessageQueue.Enqueue($"Устройство уже подключено!");
+            else
+            {
+                DialogsIsOpen = true;
+                _eventAggregator.GetEvent<MessageRequest>().Publish(true);
+            }
         }
 
         private void OnDialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             DialogsIsOpen = false;
             _eventAggregator.GetEvent<MessageRequest>().Publish(false);
+        }
+
+        private void ModifyTheme()
+        {
+            var paletteHelper = new PaletteHelper();
+            var theme = paletteHelper.GetTheme();
+
+            theme.SetBaseTheme(DarkModeIsEnable ? Theme.Dark : Theme.Light);
+            paletteHelper.SetTheme(theme);
         }
     }
 }

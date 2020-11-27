@@ -1,13 +1,12 @@
-﻿using Prism.Commands;
-using Prism.Events;
+﻿using Prism.Events;
 using Prism.Regions;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using WeatherStation.Core;
 using WeatherStation.Core.Mvvm;
 using WeatherStation.Services.CommunicationService;
+using WeatherStation.Services.CommunicationService.Data;
+using WeatherStation.Services.CommunicationService.Enum;
 
 namespace WeatherStation.Modules.ConnectionDevice.ViewModels
 {
@@ -17,30 +16,31 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
         private readonly IEventAggregator _eventAggregator = null;
         private readonly ICommunicationService _communicationService = null;
 
-        private string _nameConnectionDevice = null;
-        private string _countReciveParcel = null;
-        private string _connectionStatus = "Не подключено";
+        private string _nameConnectionDeviceLabel = null;
+        private string _countReciveFrameLabel = null;
+        private string _connectionStatusLabel = "Не подключено";
+        private int _countReciveFrame = 0;
 
         private CancellationTokenSource _cancellationTokenSource = null;
         #endregion
 
         #region Property
-        public string NameConnectionDevice
+        public string NameConnectionDeviceLabel
         {
-            get { return _nameConnectionDevice; }
-            set { SetProperty(ref _nameConnectionDevice, value); }
+            get { return _nameConnectionDeviceLabel; }
+            set { SetProperty(ref _nameConnectionDeviceLabel, value); }
         }
 
-        public string ConnectionStatus
+        public string ConnectionStatusLabel
         {
-            get { return _connectionStatus; }
-            set { SetProperty(ref _connectionStatus, value); }
+            get { return _connectionStatusLabel; }
+            set { SetProperty(ref _connectionStatusLabel, value); }
         }
 
-        public string CountReciveParcel
+        public string CountReciveFrameLabel
         {
-            get { return _countReciveParcel; }
-            set { SetProperty(ref _countReciveParcel, value); }
+            get { return _countReciveFrameLabel; }
+            set { SetProperty(ref _countReciveFrameLabel, value); }
         }
         #endregion
 
@@ -48,9 +48,26 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
         public ConnectionDeviceViewModel(IRegionManager regionManager, ICommunicationService communicationService, IEventAggregator eventAggregator) : base(regionManager)
         {
             _eventAggregator = eventAggregator;
-            _communicationService = communicationService;
-
             _eventAggregator.GetEvent<MessageRequest>().Subscribe(RequestSearchDevice);
+
+            _communicationService = communicationService;
+            _communicationService.DataRecived += DataRecived;
+            _communicationService.ConnectionChanged += ConnectionChanged;
+        }
+        #endregion
+
+        private void ConnectionChanged(object sender, ConnectionStatus e)
+        {
+            if (e == ConnectionStatus.Disconnect)
+            {
+                _countReciveFrame = 0;
+                SetPropertyNoSeachDevice();
+            }        
+        }
+
+        private void DataRecived(object sender, DataModel e)
+        {
+            CountReciveFrameLabel = $"Кол-во принятых посылок: {++_countReciveFrame}";
         }
 
         private async void RequestSearchDevice(bool request)
@@ -86,19 +103,19 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
             else
                 _cancellationTokenSource?.Cancel();
         }
+
         private void SetPropertyNoSeachDevice()
         {
-            NameConnectionDevice = null;
-            CountReciveParcel = null;
-            ConnectionStatus = "Не подключено";
+            NameConnectionDeviceLabel = null;
+            CountReciveFrameLabel = null;
+            ConnectionStatusLabel = "Не подключено";
         }
 
         private void SetPropertySeachDevice(string result)
         {
-            NameConnectionDevice = result;
-            CountReciveParcel = "Кол-во принятых посылок: 0";
-            ConnectionStatus = "Устройство подключено";
-        }
-        #endregion
+            NameConnectionDeviceLabel = result;
+            CountReciveFrameLabel = $"Кол-во принятых посылок: {_countReciveFrame}";
+            ConnectionStatusLabel = "Устройство подключено";
+        }  
     }
 }

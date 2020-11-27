@@ -20,18 +20,18 @@
             Grid.Column="0"
             Margin="20,12,0,12"
             HorizontalAlignment="Left"
-            Text="{Binding NameConnectionDevice}" />
+            Text="{Binding NameConnectionDeviceLabel}" />
         <TextBlock
             Grid.Column="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            Text="{Binding ConnectionStatus}" />
+            Text="{Binding ConnectionStatusLabel}" />
         <TextBlock
             Grid.Column="2"
             Grid.ColumnSpan="2"
             Margin="0,0,20,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Text="{Binding CountReciveParcel}" />
+            Text="{Binding CountReciveFrameLabel}" />
     </Grid>
 </UserControl>
