@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using WeatherStation.Core;
 using WeatherStation.Services.CommunicationService;
@@ -12,6 +13,7 @@ namespace WeatherStation.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         #region Filed
+        private readonly IRegionManager _regionManager = null;
         private readonly IEventAggregator _eventAggregator = null;
         private readonly ICommunicationService _communicationService = null;
 
@@ -27,20 +29,40 @@ namespace WeatherStation.ViewModels
         public DelegateCommand ChangeTheme { get; private set; }
         public bool DarkModeIsEnable
         {
-            get { return _darkModeIsEnable; }
-            set { SetProperty(ref _darkModeIsEnable, value); }
+            get => _darkModeIsEnable; 
+            set => SetProperty(ref _darkModeIsEnable, value); 
         }
 
         public DialogClosingEventHandler DialogClosingHandler { get; }
         public bool DialogsIsOpen
         {
-            get { return _dialogsIsOpen; }
-            set { SetProperty(ref _dialogsIsOpen, value); }
+            get => _dialogsIsOpen; 
+            set => SetProperty(ref _dialogsIsOpen, value);
+        }
+
+        private int _selectItem;
+        public int SelectItem
+        {
+            get 
+            {
+                switch (_selectItem)
+                {
+                    case 0:
+                        _regionManager.RequestNavigate(RegionNames.MainContent, "RealtimeDataViewer");
+                        break;
+                    case 1:
+                        _regionManager.RequestNavigate(RegionNames.MainContent, "Archives");
+                        break;
+                }
+                return _selectItem; 
+            }
+            set { SetProperty(ref _selectItem, value); }
         }
         #endregion
-
-        public MainWindowViewModel(IEventAggregator eventAggregator, ICommunicationService communicationService)
+        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ICommunicationService communicationService)
         {
+            _regionManager = regionManager;
+
             _eventAggregator = eventAggregator;
 
             _communicationService = communicationService;

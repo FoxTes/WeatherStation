@@ -15,7 +15,7 @@ namespace WeatherStation.Services.CommunicationService
         #endregion
 
         #region Filed
-        private Timer _timer = null;
+        private readonly Timer _timer = null;
         private SerialPort _serialPort = null;
         #endregion
 

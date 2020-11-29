@@ -9,7 +9,7 @@
     Height="720"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{DynamicResource MaterialDesignPaper}"
-    FontFamily="{DynamicResource MaterialDesignFont}"
+    FontFamily="Rubik"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -88,7 +88,7 @@
 
                 <DockPanel>
                     <materialDesign:ColorZone
-                        Padding="12"
+                        Padding="16"
                         materialDesign:ShadowAssist.ShadowDepth="Depth2"
                         DockPanel.Dock="Top"
                         Mode="PrimaryDark">
@@ -140,6 +140,26 @@
                                 Text="WeatherStation" />
                         </DockPanel>
                     </materialDesign:ColorZone>
+
+                    <TabControl SelectedIndex="{Binding SelectItem}" Style="{StaticResource MaterialDesignNavigatilRailTabControl}">
+                        <TabItem
+                            Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                            <TabItem.Header>
+                                <materialDesign:PackIcon
+                                    Width="24"
+                                    Height="24"
+                                    Kind="Heart" />
+                            </TabItem.Header>
+                        </TabItem>
+                        <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                            <TabItem.Header>
+                                <materialDesign:PackIcon
+                                    Width="24"
+                                    Height="24"
+                                    Kind="Spade" />
+                            </TabItem.Header>
+                        </TabItem>
+                    </TabControl>
 
                     <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.MainContent}" />
                 </DockPanel>

@@ -5,9 +5,12 @@
     <AssemblyName>WeatherStation.Modules.RealtimeDataViewer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf.NetCore3" Version="0.9.7" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Services\WeatherStation.Services.CommunicationService\WeatherStation.Services.CommunicationService.csproj" />
     <ProjectReference Include="..\WeatherStation.Core\WeatherStation.Core.csproj" />
   </ItemGroup>
 </Project>

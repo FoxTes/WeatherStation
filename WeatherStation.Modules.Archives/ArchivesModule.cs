@@ -7,16 +7,16 @@ namespace WeatherStation.Modules.Archives
 {
     public class ArchivesModule : IModule
     {
-        private readonly IRegionManager _regionManager;
+        //private readonly IRegionManager _regionManager;
 
         public ArchivesModule(IRegionManager regionManager)
         {
-            _regionManager = regionManager;
+            //_regionManager = regionManager;
         }
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            _regionManager.RequestNavigate(RegionNames.MainContent, "Archives");
+            //_regionManager.RequestNavigate(RegionNames.MainContent, "Archives");
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
