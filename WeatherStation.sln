@@ -23,9 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{60A41E32
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emulator", "Tools\Emulator\Emulator.csproj", "{49784234-906A-4897-9531-71F5055D665D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherStation.Modules.RealtimeDataViewer", "WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj", "{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherStation.Modules.RealtimeDataViewer", "WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj", "{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherStation.Modules.Archives", "WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj", "{2366030C-DDE0-46C8-9EBE-690D8B73A44E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherStation.Modules.Archives", "WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj", "{2366030C-DDE0-46C8-9EBE-690D8B73A44E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

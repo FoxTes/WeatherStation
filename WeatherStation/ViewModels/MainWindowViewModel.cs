@@ -1,8 +1,10 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Logging;
 using Prism.Mvvm;
 using Prism.Regions;
+using Serilog;
 using System;
 using WeatherStation.Core;
 using WeatherStation.Services.CommunicationService;
@@ -13,6 +15,7 @@ namespace WeatherStation.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         #region Filed
+        private readonly ILoggerFacade _logger = null;
         private readonly IRegionManager _regionManager = null;
         private readonly IEventAggregator _eventAggregator = null;
         private readonly ICommunicationService _communicationService = null;
@@ -59,10 +62,10 @@ namespace WeatherStation.ViewModels
             set { SetProperty(ref _selectItem, value); }
         }
         #endregion
-        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ICommunicationService communicationService)
+        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ICommunicationService communicationService, ILoggerFacade logger)
         {
+            _logger = logger;
             _regionManager = regionManager;
-
             _eventAggregator = eventAggregator;
 
             _communicationService = communicationService;
@@ -72,7 +75,6 @@ namespace WeatherStation.ViewModels
             ChangeTheme = new DelegateCommand(ModifyTheme);
 
             DialogClosingHandler = OnDialogClosing;
-
             MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
         }
 
@@ -81,6 +83,7 @@ namespace WeatherStation.ViewModels
             if (DialogsIsOpen)
             {
                 DialogsIsOpen = false;
+
                 if (e == ConnectionStatus.Connect)
                     MessageQueue.Enqueue($"Найдено устройство.");
                 else
@@ -98,6 +101,8 @@ namespace WeatherStation.ViewModels
             else
             {
                 DialogsIsOpen = true;
+
+                _logger.Log("Начат поиск устройства.", Category.Info, Priority.Low);
                 _eventAggregator.GetEvent<MessageRequest>().Publish(true);
             }
         }
