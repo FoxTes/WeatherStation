@@ -23,9 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{60A41E32
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emulator", "Tools\Emulator\Emulator.csproj", "{49784234-906A-4897-9531-71F5055D665D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherStation.Modules.RealtimeDataViewer", "WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj", "{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherStation.Modules.RealtimeDataViewer", "Modules\WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj", "{13808056-868D-4A48-99AF-BE47D06478E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherStation.Modules.Archives", "WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj", "{2366030C-DDE0-46C8-9EBE-690D8B73A44E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherStation.Modules.Archives", "Modules\WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj", "{22FBEFBB-BA9E-479B-9659-496ED4C40C74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,14 +57,14 @@ Global
 		{49784234-906A-4897-9531-71F5055D665D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49784234-906A-4897-9531-71F5055D665D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49784234-906A-4897-9531-71F5055D665D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2366030C-DDE0-46C8-9EBE-690D8B73A44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2366030C-DDE0-46C8-9EBE-690D8B73A44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2366030C-DDE0-46C8-9EBE-690D8B73A44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2366030C-DDE0-46C8-9EBE-690D8B73A44E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13808056-868D-4A48-99AF-BE47D06478E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13808056-868D-4A48-99AF-BE47D06478E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13808056-868D-4A48-99AF-BE47D06478E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13808056-868D-4A48-99AF-BE47D06478E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22FBEFBB-BA9E-479B-9659-496ED4C40C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22FBEFBB-BA9E-479B-9659-496ED4C40C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22FBEFBB-BA9E-479B-9659-496ED4C40C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22FBEFBB-BA9E-479B-9659-496ED4C40C74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,8 +74,8 @@ Global
 		{65B89481-6B55-47DF-9B39-65A2B4E43C2E} = {2CD92128-BB24-4871-B352-A9EB08146DC5}
 		{A2DBD355-B39D-4977-9F1B-5A2252A469C6} = {854AC5F2-9BFA-4251-8B46-3FBB2CFBCC00}
 		{49784234-906A-4897-9531-71F5055D665D} = {60A41E32-0583-44D1-AD94-1F9FB0A1CBF2}
-		{8BF28F61-E95A-4237-9DAA-A6CEBE9AE7A2} = {2CD92128-BB24-4871-B352-A9EB08146DC5}
-		{2366030C-DDE0-46C8-9EBE-690D8B73A44E} = {2CD92128-BB24-4871-B352-A9EB08146DC5}
+		{13808056-868D-4A48-99AF-BE47D06478E1} = {2CD92128-BB24-4871-B352-A9EB08146DC5}
+		{22FBEFBB-BA9E-479B-9659-496ED4C40C74} = {2CD92128-BB24-4871-B352-A9EB08146DC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B7D3482-EB90-4664-AF60-840A31DD9797}

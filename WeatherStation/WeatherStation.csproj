@@ -15,9 +15,9 @@
     <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Modules\WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj" />
     <ProjectReference Include="..\Modules\WeatherStation.Modules.ConnectionDevice\WeatherStation.Modules.ConnectionDevice.csproj" />
+    <ProjectReference Include="..\Modules\WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj" />
     <ProjectReference Include="..\WeatherStation.Core\WeatherStation.Core.csproj" />
-    <ProjectReference Include="..\WeatherStation.Modules.Archives\WeatherStation.Modules.Archives.csproj" />
-    <ProjectReference Include="..\WeatherStation.Modules.RealtimeDataViewer\WeatherStation.Modules.RealtimeDataViewer.csproj" />
   </ItemGroup>
 </Project>

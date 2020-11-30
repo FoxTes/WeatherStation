@@ -2,13 +2,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>WeatherStation.Modules.ModuleName</AssemblyName>
+    <AssemblyName>WeatherStation.Modules.Archives</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\WeatherStation.Core\WeatherStation.Core.csproj" />
-    <ProjectReference Include="..\..\Services\WeatherStation.Services.Interfaces\WeatherStation.Services.Interfaces.csproj" />
   </ItemGroup>
 </Project>
