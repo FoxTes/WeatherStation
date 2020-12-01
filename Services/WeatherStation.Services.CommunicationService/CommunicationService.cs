@@ -11,7 +11,7 @@ namespace WeatherStation.Services.CommunicationService
     {
         #region Event
         public event EventHandler<ConnectionStatus> ConnectionChanged;
-        public event EventHandler<DataReciveModel> DataRecived;
+        public event EventHandler<DataReciveDto> DataRecived;
         #endregion
 
         #region Filed
@@ -52,7 +52,7 @@ namespace WeatherStation.Services.CommunicationService
             }
             else
             {
-                var dataToSend = new DataReciveModel { MainTemperature = BitConverter.ToSingle(data, 3) };
+                var dataToSend = new DataReciveDto { Temperature = BitConverter.ToSingle(data, 3) };
                 DataRecived?.Invoke(this, dataToSend);
             }
         }

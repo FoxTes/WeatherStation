@@ -43,6 +43,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         public RealtimeDataViewerViewModel(ICommunicationService communicationService)
         {
             _communicationService = communicationService;
+            // TODO: Изменить названия ивентов. Чтобы метод не совпадал с ивентом. + Event. Во всех классах.
             _communicationService.DataRecived += DataRecived;
 
             var mapper = Mappers.Xy<MeasureModel>()
@@ -60,11 +61,11 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
 
         private void DataRecived(object sender, DataReciveDto e)
         {
-            TemperatureValue = e.MainTemperature;
+            TemperatureValue = e.Temperature;
             ChartValues.Add(new MeasureModel
             {
                 DateTime = DateTime.Now,
-                Value = e.MainTemperature
+                Value = e.Temperature
             });
 
             SetAxisLimits(DateTime.Now);
