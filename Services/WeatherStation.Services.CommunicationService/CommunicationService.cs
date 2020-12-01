@@ -68,34 +68,33 @@ namespace WeatherStation.Services.CommunicationService
 
                 try
                 {
-                    if (!_serialPort.IsOpen)
-                        _serialPort.Open();
+                    _serialPort.Open();
 
-                    try
+                    var bufferData = new byte[3] { 0x05, 0x05, 0x05 };
+                    _serialPort.DiscardInBuffer();
+                    _serialPort.Write(bufferData, 0, bufferData.Length);
+
+                    await Task.Delay(1000, cancellationToken);
+
+                    var countByte = _serialPort.BytesToRead;
+                    var data = new byte[countByte];
+                    _serialPort.Read(data, 0, countByte);
+
+                    if (countByte > 0)
                     {
-                        var bufferData = new byte[3] { 0x05, 0x05, 0x05 };
-                        _serialPort.DiscardInBuffer();
-                        _serialPort.Write(bufferData, 0, bufferData.Length);
+                        _timer.Change(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
 
-                        await Task.Delay(1000, cancellationToken);
-
-                        var countByte = _serialPort.BytesToRead;
-                        var data = new byte[countByte];
-                        _serialPort.Read(data, 0, countByte);
-
-                        if (countByte > 0)
-                        {
-                            _timer.Change(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
-
-                            IsConnected = true;
-                            ConnectionChanged?.Invoke(this, ConnectionStatus.Connect);
-                            return System.Text.Encoding.Default.GetString(data);
-                        }
+                        IsConnected = true;
+                        ConnectionChanged?.Invoke(this, ConnectionStatus.Connect);
+                        return System.Text.Encoding.Default.GetString(data);
                     }
-                    catch (Exception)
-                    {
-                        await Task.Delay(1000, cancellationToken);
-                    }
+
+                    _serialPort.Close();
+                }
+                catch (OperationCanceledException)
+                {
+                    if (_serialPort.IsOpen)
+                        _serialPort.Close();
                 }
                 catch (Exception)
                 {
