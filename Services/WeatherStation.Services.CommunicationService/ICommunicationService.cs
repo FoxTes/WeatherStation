@@ -11,7 +11,7 @@ namespace WeatherStation.Services.CommunicationService
         /// <summary>
         /// Событие, возникающие при приёме данных от прибора.
         /// </summary>
-        event EventHandler<DataReciveModel> DataRecived;
+        event EventHandler<DataReciveDto> DataRecived;
 
         /// <summary>
         /// Событие, возникающие при изменении статуса подключения прибора.

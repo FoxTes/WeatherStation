@@ -58,7 +58,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         }
         #endregion
 
-        private void DataRecived(object sender, DataReciveModel e)
+        private void DataRecived(object sender, DataReciveDto e)
         {
             TemperatureValue = e.MainTemperature;
             ChartValues.Add(new MeasureModel
