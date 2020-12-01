@@ -148,7 +148,7 @@
                                 <materialDesign:PackIcon
                                     Width="24"
                                     Height="24"
-                                    Kind="Heart" />
+                                    Kind="ChartMultiple" />
                             </TabItem.Header>
                         </TabItem>
                         <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
@@ -156,7 +156,7 @@
                                 <materialDesign:PackIcon
                                     Width="24"
                                     Height="24"
-                                    Kind="Spade" />
+                                    Kind="Database" />
                             </TabItem.Header>
                         </TabItem>
                     </TabControl>
