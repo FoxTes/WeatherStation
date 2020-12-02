@@ -142,8 +142,7 @@
                     </materialDesign:ColorZone>
 
                     <TabControl SelectedIndex="{Binding SelectItem}" Style="{StaticResource MaterialDesignNavigatilRailTabControl}">
-                        <TabItem
-                            Style="{StaticResource MaterialDesignNavigationRailTabItem}">
+                        <TabItem Style="{StaticResource MaterialDesignNavigationRailTabItem}">
                             <TabItem.Header>
                                 <materialDesign:PackIcon
                                     Width="24"
@@ -164,6 +163,8 @@
                     <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.MainContent}" />
                 </DockPanel>
             </materialDesign:DrawerHost>
+
+            <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.Notification}" />
 
             <materialDesign:Card Grid.Row="1">
                 <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.StatusBarBottom}" />

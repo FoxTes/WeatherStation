@@ -9,6 +9,7 @@ using System;
 using WeatherStation.Core;
 using WeatherStation.Services.CommunicationService;
 using WeatherStation.Services.CommunicationService.Enum;
+using WeatherStation.Services.Notification;
 
 namespace WeatherStation.ViewModels
 {
@@ -18,6 +19,7 @@ namespace WeatherStation.ViewModels
         private readonly ILoggerFacade _logger = null;
         private readonly IRegionManager _regionManager = null;
         private readonly IEventAggregator _eventAggregator = null;
+        private readonly INotificationService _notificationService = null;
         private readonly ICommunicationService _communicationService = null;
 
         private bool _dialogsIsOpen = false;
@@ -62,42 +64,42 @@ namespace WeatherStation.ViewModels
             set { SetProperty(ref _selectItem, value); }
         }
         #endregion
-        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ICommunicationService communicationService, ILoggerFacade logger)
+        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ICommunicationService communicationService, ILoggerFacade logger, INotificationService notificationService)
         {
             _logger = logger;
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
+            _notificationService = notificationService;
 
             _communicationService = communicationService;
-            _communicationService.ConnectionChanged += ConnectionChanged;
+            _communicationService.ConnectionChanged += ConnectionChangedEvent;
 
             SeachDevice = new DelegateCommand(SendMessage);
             ChangeTheme = new DelegateCommand(ModifyTheme);
 
             DialogClosingHandler = OnDialogClosing;
-            MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
         }
 
-        private void ConnectionChanged(object sender, ConnectionStatus e)
+        private void ConnectionChangedEvent(object sender, ConnectionStatus e)
         {
             if (DialogsIsOpen)
             {
                 DialogsIsOpen = false;
 
                 if (e == ConnectionStatus.Connect)
-                    MessageQueue.Enqueue($"Найдено устройство.");
+                    _notificationService.ShowMessage($"Найдено устройство.");
                 else
-                    MessageQueue.Enqueue("Устройство не найдено.");
+                    _notificationService.ShowMessage("Устройство не найдено.");
             }
             else
                 if (e == ConnectionStatus.Disconnect)
-                    MessageQueue.Enqueue($"Связь с устройством потеряна!");
+                    _notificationService.ShowMessage($"Связь с устройством потеряна!");
         }
 
         private void SendMessage()
         {
             if (_communicationService.IsConnected)
-                MessageQueue.Enqueue($"Устройство уже подключено!");
+                _notificationService.ShowMessage($"Устройство уже подключено!");
             else
             {
                 DialogsIsOpen = true;
@@ -111,7 +113,7 @@ namespace WeatherStation.ViewModels
         {
             DialogsIsOpen = false;
 
-            MessageQueue.Enqueue("Поиск устройства прерван!");
+            _notificationService.ShowMessage("Поиск устройства прерван!");
             _eventAggregator.GetEvent<MessageRequest>().Publish(false);
         }
 
@@ -122,6 +124,8 @@ namespace WeatherStation.ViewModels
 
             theme.SetBaseTheme(DarkModeIsEnable ? Theme.Dark : Theme.Light);
             paletteHelper.SetTheme(theme);
+
+            _notificationService.ShowMessage("Старт приложения!");
         }
     }
 }

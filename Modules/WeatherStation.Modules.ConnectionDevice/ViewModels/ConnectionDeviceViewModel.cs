@@ -66,7 +66,7 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
             }        
         }
 
-        private void DataRecived(object sender, DataReciveModel e)
+        private void DataRecived(object sender, DataReciveDto e)
         {
             CountReciveFrameLabel = $"Кол-во принятых посылок: {++_countReciveFrame}";
         }
@@ -74,7 +74,6 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
         private async void RequestSearchDevice(bool request)
         {
             if (request)
-            {
                 try
                 {
                     _cancellationTokenSource = new CancellationTokenSource();
@@ -93,7 +92,6 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
                 {
                     _cancellationTokenSource = null;
                 }
-            }
             else
                 _cancellationTokenSource?.Cancel();
         }

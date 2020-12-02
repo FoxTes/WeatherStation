@@ -4,8 +4,10 @@ using Serilog;
 using System.Windows;
 using WeatherStation.Modules.Archives;
 using WeatherStation.Modules.ConnectionDevice;
+using WeatherStation.Modules.NotificationViewer;
 using WeatherStation.Modules.RealtimeDataViewer;
 using WeatherStation.Services.CommunicationService;
+using WeatherStation.Services.Notification;
 using WeatherStation.Views;
 
 namespace WeatherStation
@@ -38,12 +40,14 @@ namespace WeatherStation
         {
             containerRegistry.RegisterSerilog();
             containerRegistry.RegisterSingleton<ICommunicationService, CommunicationService>();
+            containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<ConnectionDeviceModule>();
             moduleCatalog.AddModule<RealtimeDataViewerModule>();
+            moduleCatalog.AddModule<ConnectionDeviceModule>();
+            moduleCatalog.AddModule<NotificationViewerModule>();
             moduleCatalog.AddModule<ArchivesModule>();
         }        
         

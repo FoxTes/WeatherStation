@@ -19,8 +19,7 @@
 
         <TextBlock
             Grid.Column="0"
-            Margin="20,0,0,0"
-            VerticalAlignment="Center"
+            Margin="20,13,0,13"
             HorizontalAlignment="Left"
             Text="{Binding NameConnectionDeviceLabel}" />
         <TextBlock

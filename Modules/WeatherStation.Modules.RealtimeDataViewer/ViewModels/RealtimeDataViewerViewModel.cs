@@ -14,6 +14,8 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         private readonly ICommunicationService _communicationService = null;
 
         private double _temperatureValue = 0;
+        private double _pressureValue = 0;
+        private double _humidityValue = 0;
         private double _axisMax = 0;
         private double _axisMin = 0;
         #endregion
@@ -22,6 +24,16 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         {
             get => _temperatureValue; 
             set => SetProperty(ref _temperatureValue, value);
+        }
+        public double PressureValue
+        {
+            get => _pressureValue;
+            set => SetProperty(ref _pressureValue, value);
+        }
+        public double HumidityValue
+        {
+            get => _humidityValue;
+            set => SetProperty(ref _humidityValue, value);
         }
 
         public ChartValues<MeasureModel> ChartValues { get; set; }
@@ -43,8 +55,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         public RealtimeDataViewerViewModel(ICommunicationService communicationService)
         {
             _communicationService = communicationService;
-            // TODO: Изменить названия ивентов. Чтобы метод не совпадал с ивентом. + Event. Во всех классах.
-            _communicationService.DataRecived += DataRecived;
+            _communicationService.DataRecived += DataRecivedEvent;
 
             var mapper = Mappers.Xy<MeasureModel>()
                 .X(model => model.DateTime.Ticks)   
@@ -59,9 +70,12 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         }
         #endregion
 
-        private void DataRecived(object sender, DataReciveDto e)
+        private void DataRecivedEvent(object sender, DataReciveDto e)
         {
             TemperatureValue = e.Temperature;
+            PressureValue = e.AtmosphericPressure;
+            HumidityValue = e.Humidity;
+
             ChartValues.Add(new MeasureModel
             {
                 DateTime = DateTime.Now,

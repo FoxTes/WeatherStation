@@ -10,7 +10,7 @@
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\WeatherStation.Services.CommunicationService\WeatherStation.Services.CommunicationService.csproj" />
+    <ProjectReference Include="..\..\Services\WeatherStation.Services.CommunicationService\WeatherStation.Services.Communication.csproj" />
     <ProjectReference Include="..\..\WeatherStation.Core\WeatherStation.Core.csproj" />
   </ItemGroup>
 </Project>

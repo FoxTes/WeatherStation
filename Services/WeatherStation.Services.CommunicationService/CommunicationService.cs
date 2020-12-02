@@ -52,7 +52,12 @@ namespace WeatherStation.Services.CommunicationService
             }
             else
             {
-                var dataToSend = new DataReciveDto { Temperature = BitConverter.ToSingle(data, 3) };
+                var dataToSend = new DataReciveDto 
+                { 
+                    Temperature = BitConverter.ToSingle(data, 3), 
+                    AtmosphericPressure = BitConverter.ToSingle(data, 7),
+                    Humidity = BitConverter.ToSingle(data, 11),
+                };
                 DataRecived?.Invoke(this, dataToSend);
             }
         }

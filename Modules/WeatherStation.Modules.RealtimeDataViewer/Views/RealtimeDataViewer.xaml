@@ -14,10 +14,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="200" />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -31,8 +33,8 @@
             <lvc:Gauge
                 LabelsVisibility="Hidden"
                 Value="{Binding TemperatureValue}"
-                From="0"
-                To="40">
+                From="20"
+                To="24">
                 <lvc:Gauge.GaugeActiveFill>
                     <LinearGradientBrush>
                         <GradientStop Offset="0.0" Color="Yellow" />
@@ -43,34 +45,85 @@
             </lvc:Gauge>
         </materialDesign:Card>
 
-        <lvc:CartesianChart
+        <materialDesign:Card
             Grid.Row="0"
             Grid.Column="1"
-            Margin="25"
-            AnimationsSpeed="0:0:0.5"
-            DataTooltip="{x:Null}"
-            Hoverable="False">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries
-                    Fill="Transparent"
-                    LineSmoothness="1"
-                    PointGeometry="{x:Null}"
-                    Stroke="#F34336"
-                    StrokeThickness="3"
-                    Values="{Binding ChartValues}" />
-            </lvc:CartesianChart.Series>
+            Margin="16"
+            Padding="32">
+            <lvc:Gauge
+                LabelsVisibility="Hidden"
+                Value="{Binding PressureValue}"
+                From="758"
+                To="765">
+                <lvc:Gauge.GaugeActiveFill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0.0" Color="Yellow" />
+                        <GradientStop Offset="0.5" Color="Orange" />
+                        <GradientStop Offset="1.0" Color="Red" />
+                    </LinearGradientBrush>
+                </lvc:Gauge.GaugeActiveFill>
+            </lvc:Gauge>
+        </materialDesign:Card>
 
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis
-                    LabelFormatter="{Binding DateTimeFormatter}"
-                    MaxValue="{Binding AxisMax}"
-                    MinValue="{Binding AxisMin}"
-                    Unit="{Binding AxisUnit}">
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Step="{Binding AxisStep}" />
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-        </lvc:CartesianChart>
+        <materialDesign:Card
+            Grid.Row="0"
+            Grid.Column="2"
+            Margin="16"
+            Padding="32">
+            <lvc:Gauge
+                LabelsVisibility="Hidden"
+                Value="{Binding HumidityValue}"
+                From="40"
+                To="60">
+                <lvc:Gauge.GaugeActiveFill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0.0" Color="Yellow" />
+                        <GradientStop Offset="0.5" Color="Orange" />
+                        <GradientStop Offset="1.0" Color="Red" />
+                    </LinearGradientBrush>
+                </lvc:Gauge.GaugeActiveFill>
+            </lvc:Gauge>
+        </materialDesign:Card>
+
+        <materialDesign:Card
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Margin="16,0,16,16"
+            Padding="32">
+
+            <lvc:CartesianChart
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="25"
+                AnimationsSpeed="0:0:0.5"
+                DataTooltip="{x:Null}"
+                Hoverable="False">
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries
+                        Fill="Transparent"
+                        LineSmoothness="1"
+                        PointGeometry="{x:Null}"
+                        Stroke="#F34336"
+                        StrokeThickness="3"
+                        Values="{Binding ChartValues}" />
+                </lvc:CartesianChart.Series>
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis
+                        LabelFormatter="{Binding DateTimeFormatter}"
+                        MaxValue="{Binding AxisMax}"
+                        MinValue="{Binding AxisMin}"
+                        Unit="{Binding AxisUnit}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="{Binding AxisStep}" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+        </materialDesign:Card>
     </Grid>
 </UserControl>

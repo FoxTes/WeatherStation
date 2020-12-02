@@ -9,6 +9,7 @@ namespace Emulator
         private static SerialPort _serialPort = null;
         private static Random _rnd = null;
 
+        private static int _countData = 0;
         private static bool _statusEmulator = true;
 
         static void Main(string[] args)
@@ -78,10 +79,21 @@ namespace Emulator
                     case 0x01:
                         Console.WriteLine("Answer - Acknow");
 
-                        var temperature = BitConverter.GetBytes((float)(20d + _rnd.NextDouble() * 5d));
+                        var dataTemp = (22d + _rnd.NextDouble() * 0.1);
+                        if (_rnd.NextDouble() < 0.2d)
+                            dataTemp += Math.Sin(_countData++) * 0.25;
+                            if (_countData > 25)
+                                _countData = 0;
+                        var temperature = BitConverter.GetBytes((float)dataTemp);
+                        var atmosphericPressure = BitConverter.GetBytes((float)(760d + _rnd.NextDouble()));
+                        var Humidity = BitConverter.GetBytes((float)(50d + _rnd.NextDouble() * 5d + Math.Sin(_countData++) * 3));
+
                         var dataAnswer = new List<byte>();
+
                         dataAnswer.AddRange(new byte[3] { 0x01, 0x01, 0x01 });
                         dataAnswer.AddRange(temperature);
+                        dataAnswer.AddRange(atmosphericPressure);
+                        dataAnswer.AddRange(Humidity);
 
                         _serialPort.Write(dataAnswer.ToArray(), 0, dataAnswer.Count);
                         break;

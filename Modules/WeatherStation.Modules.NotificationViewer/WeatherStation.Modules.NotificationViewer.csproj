@@ -2,14 +2,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>WeatherStation.Modules.ConnectionDevice</AssemblyName>
+    <AssemblyName>WeatherStation.Modules.NotificationViewer</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
-    <PackageReference Include="System.IO.Ports" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\WeatherStation.Services.CommunicationService\WeatherStation.Services.Communication.csproj" />
     <ProjectReference Include="..\..\Services\WeatherStation.Services.Notification\WeatherStation.Services.Notification.csproj" />
     <ProjectReference Include="..\..\WeatherStation.Core\WeatherStation.Core.csproj" />
   </ItemGroup>
