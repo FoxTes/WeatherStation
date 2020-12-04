@@ -16,7 +16,6 @@ namespace WeatherStation.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         #region Filed
-        private readonly ILoggerFacade _logger = null;
         private readonly IRegionManager _regionManager = null;
         private readonly IEventAggregator _eventAggregator = null;
         private readonly INotificationService _notificationService = null;
@@ -64,9 +63,9 @@ namespace WeatherStation.ViewModels
             set { SetProperty(ref _selectItem, value); }
         }
         #endregion
-        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ICommunicationService communicationService, ILoggerFacade logger, INotificationService notificationService)
+        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, 
+                                   ICommunicationService communicationService, INotificationService notificationService)
         {
-            _logger = logger;
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
             _notificationService = notificationService;
@@ -104,7 +103,6 @@ namespace WeatherStation.ViewModels
             {
                 DialogsIsOpen = true;
 
-                _logger.Log("Начат поиск устройства.", Category.Info, Priority.Low);
                 _eventAggregator.GetEvent<MessageRequest>().Publish(true);
             }
         }

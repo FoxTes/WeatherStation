@@ -38,7 +38,6 @@ namespace WeatherStation
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSerilog();
             containerRegistry.RegisterSingleton<ICommunicationService, CommunicationService>();
             containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
         }
