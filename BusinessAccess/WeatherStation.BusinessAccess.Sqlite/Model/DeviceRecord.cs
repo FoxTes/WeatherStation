@@ -1,21 +1,8 @@
-﻿using Prism.Mvvm;
-
-namespace WeatherStation.BusinessAccess.Sqlite.Model
+﻿namespace WeatherStation.BusinessAccess.Sqlite.Model
 {
-    public class DeviceRecord : BindableBase
+    public class DeviceRecord
     {
-        private int _id;
-        public int Id
-        {
-            get { return _id; }
-            set { SetProperty(ref _id, value); }
-        }
-
-        private int _temperature;
-        public int Temperature
-        {
-            get { return _temperature; }
-            set { SetProperty(ref _temperature, value); }
-        }
+        public int Id { get; set; }  
+        public int Temperature { get; set; }
     }
 }

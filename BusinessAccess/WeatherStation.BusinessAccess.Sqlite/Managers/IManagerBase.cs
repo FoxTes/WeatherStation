@@ -8,6 +8,7 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
     /// <typeparam name="TModel">Загружаемая сущность.</typeparam>
     public interface IManagerBase<TModel>
     {
+        // TODO: Подумать над структурой.
         List<TModel> GetAllRecord();
         bool AdRecordd(TModel model);
         bool AddRangeRecord(List<TModel> models);

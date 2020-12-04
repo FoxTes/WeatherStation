@@ -1,5 +1,6 @@
 ﻿using Prism.Mvvm;
 using WeatherStation.BusinessAccess.Sqlite;
+using WeatherStation.BusinessAccess.Sqlite.Model;
 
 namespace WeatherStation.Modules.Archives.ViewModels
 {
@@ -14,8 +15,9 @@ namespace WeatherStation.Modules.Archives.ViewModels
 
         public ArchivesViewModel(ISqliteService sqliteService)
         {
-            sqliteService.DeviceRecord.CreateDatabase();
             Message = "Archives";
+
+            sqliteService.DeviceRecord.RecordSaved(new DeviceRecord { Temperature = 20 });
         }
     }
 }
