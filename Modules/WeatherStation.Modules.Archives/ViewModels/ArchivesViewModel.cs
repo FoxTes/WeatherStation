@@ -1,4 +1,5 @@
 ﻿using Prism.Mvvm;
+using WeatherStation.BusinessAccess.Sqlite;
 
 namespace WeatherStation.Modules.Archives.ViewModels
 {
@@ -11,8 +12,9 @@ namespace WeatherStation.Modules.Archives.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ArchivesViewModel()
+        public ArchivesViewModel(ISqliteService sqliteService)
         {
+            sqliteService.DeviceRecord.CreateDatabase();
             Message = "Archives";
         }
     }

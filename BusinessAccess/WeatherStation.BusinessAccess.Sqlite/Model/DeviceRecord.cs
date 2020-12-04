@@ -2,7 +2,7 @@
 
 namespace WeatherStation.BusinessAccess.Sqlite.Model
 {
-    public class DeviceDataReciveModel : BindableBase
+    public class DeviceRecord : BindableBase
     {
         private int _id;
         public int Id

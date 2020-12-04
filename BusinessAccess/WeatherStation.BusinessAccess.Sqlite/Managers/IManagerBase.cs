@@ -2,6 +2,10 @@
 
 namespace WeatherStation.BusinessAccess.Sqlite.Managers
 {
+    /// <summary>
+    /// Базовое представление для всех сущностей в БД.
+    /// </summary>
+    /// <typeparam name="TModel">Загружаемая сущность.</typeparam>
     public interface IManagerBase<TModel>
     {
         List<TModel> GetAllRecord();

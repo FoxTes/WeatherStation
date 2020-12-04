@@ -1,7 +1,7 @@
-﻿using Prism.Ioc;
+﻿using System.Windows;
+using Prism.Ioc;
 using Prism.Modularity;
-using Serilog;
-using System.Windows;
+using WeatherStation.BusinessAccess.Sqlite;
 using WeatherStation.Modules.Archives;
 using WeatherStation.Modules.ConnectionDevice;
 using WeatherStation.Modules.NotificationViewer;
@@ -19,20 +19,11 @@ namespace WeatherStation
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.File(path: "logger/MyApp.log")
-                .CreateLogger();
-            Log.Logger.Information("Start application!");
-
             base.OnStartup(e);
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Log.Logger.Information("Close application!");
-            Log.CloseAndFlush();
-
             base.OnExit(e);
         }
 
@@ -40,6 +31,7 @@ namespace WeatherStation
         {
             containerRegistry.RegisterSingleton<ICommunicationService, CommunicationService>();
             containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
+            containerRegistry.RegisterSingleton<ISqliteService, SqliteService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
