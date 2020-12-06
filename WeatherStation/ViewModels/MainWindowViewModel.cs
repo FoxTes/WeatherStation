@@ -1,11 +1,8 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Events;
-using Prism.Logging;
 using Prism.Mvvm;
 using Prism.Regions;
-using Serilog;
-using System;
 using WeatherStation.Core;
 using WeatherStation.Services.CommunicationService;
 using WeatherStation.Services.CommunicationService.Enum;
@@ -63,6 +60,8 @@ namespace WeatherStation.ViewModels
             set { SetProperty(ref _selectItem, value); }
         }
         #endregion
+
+        #region Constructor
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, 
                                    ICommunicationService communicationService, INotificationService notificationService)
         {
@@ -78,7 +77,9 @@ namespace WeatherStation.ViewModels
 
             DialogClosingHandler = OnDialogClosing;
         }
+        #endregion
 
+        #region Method
         private void ConnectionChangedEvent(object sender, ConnectionStatus e)
         {
             if (DialogsIsOpen)
@@ -125,5 +126,6 @@ namespace WeatherStation.ViewModels
 
             _notificationService.ShowMessage("Старт приложения!");
         }
+        #endregion
     }
 }
