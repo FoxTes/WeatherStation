@@ -1,13 +1,19 @@
-﻿using EmulatorDatabase.Model;
+﻿using System;
+using System.IO;
+using EmulatorDatabase.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmulatorDatabase.Data
 {
     public class SqliteContext : DbContext
     {
-        // TODO: Поправить путь.
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite(@"Data Source=C:\Users\Georgy\Documents\WeatherStation\BusinessAccess\WeatherStation.BusinessAccess.Sqlite\Database\appdb.db");
+        {
+            string[] myPath = AppDomain.CurrentDomain.BaseDirectory.Split(Path.DirectorySeparatorChar);
+            string pathDatabase = Path.Combine(myPath[0], myPath[1], myPath[2], @"WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db");
+
+            options.UseSqlite($"Data Source={pathDatabase}");
+        }
 
         public DbSet<DeviceRecord> DeviceRecords { get; set; }
     }

@@ -9,12 +9,15 @@ namespace EmulatorDatabase
     {
         static void Main(string[] args)
         {
-            if (!File.Exists(@"C:\Users\Georgy\Documents\WeatherStation\BusinessAccess\WeatherStation.BusinessAccess.Sqlite\Database\appdb.db"))
+            string[] myPath = AppDomain.CurrentDomain.BaseDirectory.Split(Path.DirectorySeparatorChar);
+            string pathDatabase = Path.Combine(myPath[0], myPath[1], myPath[2], @"WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db");
+
+            if (!File.Exists(pathDatabase))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("База данных не существует!");
                 Console.ReadKey();
-                //return;
+                return;
             }
             else
             {
