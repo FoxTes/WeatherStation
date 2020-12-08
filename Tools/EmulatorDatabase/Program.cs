@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using EmulatorDatabase.Data;
 using EmulatorDatabase.Model;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +16,10 @@ namespace EmulatorDatabase
 
             for (int i = 0; i < myPath.Length; i++)
                 if (myPath[i].Contains("WeatherStation"))
-                    pathDatabase = $@"{Path.Combine(myPath[0..i])}\WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db";
+                {
+                    pathDatabase = $@"{Path.Combine(myPath[0..(i + 1)])}\WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db";
+                    break;
+                }
 
             if (!File.Exists(pathDatabase))
             {
@@ -38,16 +40,13 @@ namespace EmulatorDatabase
 
             using var db = new SqliteContext();
             Console.WriteLine("Add New Employee: ");
-            db.DeviceRecords.Add(new DeviceRecord { Temperature = 20 });
+            for (int i = 0; i <100000; i++)
+            {
+                db.DeviceRecords.Add(new DeviceRecord { Temperature = 20 });
+            }
             db.SaveChanges();
             Console.WriteLine("Employee has been added sucessfully.");
 
-            using var context = new SqliteContext();
-            IQueryable<DeviceRecord> dbQuery = context.Set<DeviceRecord>();
-
-            var data = dbQuery.AsNoTracking()
-                          .ToList();
-            Console.ReadKey();
         }
     }
 }

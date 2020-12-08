@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WeatherStation.BusinessAccess.Sqlite.Data;
 
@@ -10,6 +11,18 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
 {
     public class GenericDataRepository<T> : IGenericDataRepository<T> where T : class
     {
+        public virtual async Task<IList<T>> GetAllAsync(params Expression<Func<T, object>>[] navigationProperties)
+        {
+            using var context = new SqliteContext();
+            IQueryable<T> dbQuery = context.Set<T>();
+
+            foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                dbQuery = dbQuery.Include(navigationProperty);
+
+            return await dbQuery.AsNoTracking()
+                                .ToListAsync();
+        }
+
         public virtual IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
         {
             using var context = new SqliteContext();

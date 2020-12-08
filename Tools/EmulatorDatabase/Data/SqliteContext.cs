@@ -14,7 +14,10 @@ namespace EmulatorDatabase.Data
 
             for (int i = 0; i < myPath.Length; i++)
                 if (myPath[i].Contains("WeatherStation"))
+                {
                     pathDatabase = $@"{Path.Combine(myPath[0..(i + 1)])}\WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db";
+                    break;
+                }
 
             options.UseSqlite($"Data Source={pathDatabase}");
         }

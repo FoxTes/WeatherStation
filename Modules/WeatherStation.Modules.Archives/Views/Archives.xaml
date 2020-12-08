@@ -10,10 +10,6 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="32"
-            Text="{Binding Message}" />
+        <Button Command="{Binding TestReadDatabase}" />
     </Grid>
 </UserControl>
