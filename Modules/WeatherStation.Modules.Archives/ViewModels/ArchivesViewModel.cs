@@ -17,7 +17,11 @@ namespace WeatherStation.Modules.Archives.ViewModels
         {
             Message = "Archives";
 
-            //sqliteService.DeviceRecord.RecordSaved(new DeviceRecord { Temperature = 20 });
+            sqliteService.DeviceRecord.Add(new DeviceRecord() {Temperature = 20 });
+
+            var temp = sqliteService.DeviceRecord.GetAll();
+            var data = sqliteService.DeviceRecord.GetSingle(x => x.Id == 2);
+
         }
     }
 }

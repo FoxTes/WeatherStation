@@ -4,6 +4,6 @@ namespace WeatherStation.BusinessAccess.Sqlite
 {
     public interface ISqliteService
     {
-        IManagerDeviceRecord DeviceRecord { get; }
+        IDeviceRecordRepository DeviceRecord { get; }
     }
 }

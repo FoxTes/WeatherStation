@@ -5,6 +5,6 @@ namespace WeatherStation.BusinessAccess.Sqlite
 {
     public class SqliteService : ISqliteService
     {
-        public IManagerDeviceRecord DeviceRecord => new ManagerDeviceRecord();
+        public IDeviceRecordRepository DeviceRecord => new DeviceRecordRepository();
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
 using EmulatorDatabase.Data;
 using EmulatorDatabase.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmulatorDatabase
 {
@@ -14,15 +17,14 @@ namespace EmulatorDatabase
 
             for (int i = 0; i < myPath.Length; i++)
                 if (myPath[i].Contains("WeatherStation"))
-                    pathDatabase = $@"{Path.Combine(myPath[0..(i + 1)])}\WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db";
-
+                    pathDatabase = $@"{Path.Combine(myPath[0..i])}\WeatherStation\bin\Debug\netcoreapp3.1\database\appdb.db";
 
             if (!File.Exists(pathDatabase))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("База данных не существует!");
                 Console.ReadKey();
-                return;
+                //return;
             }
             else
             {
@@ -31,6 +33,7 @@ namespace EmulatorDatabase
                 Console.WriteLine("");
                 Console.WriteLine(pathDatabase);
                 Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.White;
             }
 
             using var db = new SqliteContext();
@@ -38,6 +41,13 @@ namespace EmulatorDatabase
             db.DeviceRecords.Add(new DeviceRecord { Temperature = 20 });
             db.SaveChanges();
             Console.WriteLine("Employee has been added sucessfully.");
+
+            using var context = new SqliteContext();
+            IQueryable<DeviceRecord> dbQuery = context.Set<DeviceRecord>();
+
+            var data = dbQuery.AsNoTracking()
+                          .ToList();
+            Console.ReadKey();
         }
     }
 }
