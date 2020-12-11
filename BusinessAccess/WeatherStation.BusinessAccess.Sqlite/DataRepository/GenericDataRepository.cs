@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WeatherStation.BusinessAccess.Sqlite.Data;
@@ -13,14 +12,22 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
     {
         public virtual async Task<IList<T>> GetAllAsync(params Expression<Func<T, object>>[] navigationProperties)
         {
-            using var context = new SqliteContext();
-            IQueryable<T> dbQuery = context.Set<T>();
+            var task = Task.Run(() =>
+            {
+                var context = new SqliteContext();
+                IQueryable<T> dbQuery = context.Set<T>();
 
-            foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                dbQuery = dbQuery.Include(navigationProperty);
+                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                    dbQuery = dbQuery.Include(navigationProperty);
 
-            return await dbQuery.AsNoTracking()
-                                .ToListAsync();
+                return dbQuery;
+            });
+
+            await Task.WhenAll(task).ConfigureAwait(false);
+            var result = task.Result;
+
+            return await result.AsNoTracking()
+                               .ToListAsync();
         }
 
         public virtual IList<T> GetAll(params Expression<Func<T, object>>[] navigationProperties)
@@ -60,7 +67,7 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
 
                 item = dbQuery
                     .AsNoTracking()
-                    .FirstOrDefault(where); 
+                    .FirstOrDefault(where);
             }
             return item;
         }

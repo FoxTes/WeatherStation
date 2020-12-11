@@ -11,5 +11,11 @@
     mc:Ignorable="d">
     <Grid>
         <Button Command="{Binding TestReadDatabase}" />
+
+        <TextBlock
+            Margin="0,185,0,80"
+            HorizontalAlignment="Center"
+            FontSize="20"
+            Text="{Binding TestBox}" />
     </Grid>
 </UserControl>

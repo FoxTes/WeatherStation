@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
 using WeatherStation.BusinessAccess.Sqlite;
+using WeatherStation.BusinessAccess.Sqlite.Data;
 using WeatherStation.BusinessAccess.Sqlite.Model;
 
 namespace WeatherStation.Modules.Archives.ViewModels
@@ -11,10 +14,18 @@ namespace WeatherStation.Modules.Archives.ViewModels
     public class ArchivesViewModel : BindableBase
     {
         #region Filed
-        private readonly ISqliteService _sqliteService = null;
+        private readonly ISqliteService _sqliteService;
+
+        private string _testBox;
         #endregion
 
         #region Property
+        public string TestBox
+        {
+            get { return _testBox; }
+            set { SetProperty(ref _testBox, value); }
+        }
+
         public DelegateCommand TestReadDatabase { get; private set; }
         #endregion
 
@@ -30,7 +41,11 @@ namespace WeatherStation.Modules.Archives.ViewModels
         #region Method
         private async void ReadEntity()
         {
+            TestBox = "Начали";
+
             var data = await _sqliteService.DeviceRecord.GetAllAsync();
+
+            TestBox = "Закончиили";
         }
         #endregion
     }
