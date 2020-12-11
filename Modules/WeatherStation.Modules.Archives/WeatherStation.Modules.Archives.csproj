@@ -5,9 +5,10 @@
     <AssemblyName>WeatherStation.Modules.Archives</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+    <PackageReference Include="Prism.Wpf" Version="8.0.0.1909" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BusinessAccess\WeatherStation.BusinessAccess.Sqlite\WeatherStation.BusinessAccess.Sqlite.csproj" />
     <ProjectReference Include="..\..\WeatherStation.Core\WeatherStation.Core.csproj" />
   </ItemGroup>
 </Project>
