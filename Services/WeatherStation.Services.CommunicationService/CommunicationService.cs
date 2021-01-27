@@ -11,12 +11,12 @@ namespace WeatherStation.Services.CommunicationService
     {
         #region Event
         public event EventHandler<ConnectionStatus> ConnectionChanged;
-        public event EventHandler<DataReciveDto> DataRecived;
+        public event EventHandler<DataReciveEventArgs> DataRecived;
         #endregion
 
         #region Filed
-        private readonly Timer _timer = null;
-        private SerialPort _serialPort = null;
+        private readonly Timer _timer;
+        private SerialPort _serialPort;
         #endregion
 
         #region Property
@@ -26,14 +26,14 @@ namespace WeatherStation.Services.CommunicationService
         #region Constructor
         public CommunicationService()
         {
-            _timer = new Timer(new TimerCallback(OnTimerEven), null, Timeout.Infinite, Timeout.Infinite);
+            _timer = new Timer(OnTimerEven, null, Timeout.Infinite, Timeout.Infinite);
         }
         #endregion
 
         #region Method
         private async void OnTimerEven(object state)
         {
-            var bufferData = new byte[3] { 0x05, 0x01, 0x05 };
+            var bufferData = new byte[] { 0x05, 0x01, 0x05 };
             _serialPort.Write(bufferData, 0, bufferData.Length);
 
             await Task.Delay(100);
@@ -52,7 +52,7 @@ namespace WeatherStation.Services.CommunicationService
             }
             else
             {
-                var dataToSend = new DataReciveDto 
+                var dataToSend = new DataReciveEventArgs
                 { 
                     Temperature = BitConverter.ToSingle(data, 3), 
                     AtmosphericPressure = BitConverter.ToSingle(data, 7),
@@ -75,7 +75,7 @@ namespace WeatherStation.Services.CommunicationService
                 {
                     _serialPort.Open();
 
-                    var bufferData = new byte[3] { 0x05, 0x05, 0x05 };
+                    var bufferData = new byte[] { 0x05, 0x05, 0x05 };
                     _serialPort.DiscardInBuffer();
                     _serialPort.Write(bufferData, 0, bufferData.Length);
 

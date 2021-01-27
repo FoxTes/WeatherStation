@@ -17,7 +17,6 @@
     TextOptions.TextRenderingMode="Auto">
 
     <materialDesign:DialogHost
-        Grid.Row="0"
         CloseOnClickAway="True"
         DialogClosingCallback="{Binding DialogClosingHandler}"
         DialogTheme="Dark"
@@ -164,13 +163,13 @@
                 </DockPanel>
             </materialDesign:DrawerHost>
 
-            <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.Notification}" />
+            <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static core:RegionNames.Notification}" />
 
             <materialDesign:Card Grid.Row="1">
                 <ContentControl prism:RegionManager.RegionName="{x:Static core:RegionNames.StatusBarBottom}" />
             </materialDesign:Card>
 
-            <materialDesign:Snackbar HorizontalAlignment="Center" MessageQueue="{Binding MessageQueue}" />
+            <materialDesign:Snackbar Grid.Row="0" HorizontalAlignment="Center" MessageQueue="{Binding MessageQueue}" />
         </Grid>
     </materialDesign:DialogHost>
 

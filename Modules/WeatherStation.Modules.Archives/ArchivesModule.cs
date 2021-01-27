@@ -14,5 +14,6 @@ namespace WeatherStation.Modules.Archives
         {
             containerRegistry.RegisterForNavigation<Views.Archives>();
         }
+
     }
 }

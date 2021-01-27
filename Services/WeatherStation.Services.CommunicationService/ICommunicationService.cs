@@ -9,9 +9,9 @@ namespace WeatherStation.Services.CommunicationService
     public interface ICommunicationService
     {
         /// <summary>
-        /// Событие, возникающие при приёме данных от прибора.
+        /// Событие, возникающие при приеме данных от прибора.
         /// </summary>
-        event EventHandler<DataReciveDto> DataRecived;
+        event EventHandler<DataReciveEventArgs> DataRecived;
 
         /// <summary>
         /// Событие, возникающие при изменении статуса подключения прибора.
@@ -26,7 +26,7 @@ namespace WeatherStation.Services.CommunicationService
         /// <summary>
         /// Поиск подключенного прибора по COM порту.
         /// </summary>
-        /// <param name="cancellationToken">Токен для отмены опреации.</param>
+        /// <param name="cancellationToken">Токен для отмены операции.</param>
         /// <param name="progress">Прогресс поиска.</param>
         /// <returns>Имя устройства.</returns>
         Task<string> SeachDeviceAsync(CancellationToken cancellationToken, IProgress<byte> progress = null);

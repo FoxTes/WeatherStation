@@ -12,93 +12,43 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-
+            <ColumnDefinition Width="400" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <materialDesign:Card
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="16"
-            Padding="32">
-            <lvc:Gauge
-                LabelsVisibility="Hidden"
-                Value="{Binding TemperatureValue}"
-                From="20"
-                To="24">
-                <lvc:Gauge.GaugeActiveFill>
-                    <LinearGradientBrush>
-                        <GradientStop Offset="0.0" Color="Yellow" />
-                        <GradientStop Offset="0.5" Color="Orange" />
-                        <GradientStop Offset="1.0" Color="Red" />
-                    </LinearGradientBrush>
-                </lvc:Gauge.GaugeActiveFill>
-            </lvc:Gauge>
-        </materialDesign:Card>
+            <materialDesign:Card Margin="16" Padding="32" />
 
-        <materialDesign:Card
-            Grid.Row="0"
-            Grid.Column="1"
-            Margin="16"
-            Padding="32">
-            <lvc:Gauge
-                LabelsVisibility="Hidden"
-                Value="{Binding PressureValue}"
-                From="758"
-                To="765">
-                <lvc:Gauge.GaugeActiveFill>
-                    <LinearGradientBrush>
-                        <GradientStop Offset="0.0" Color="Yellow" />
-                        <GradientStop Offset="0.5" Color="Orange" />
-                        <GradientStop Offset="1.0" Color="Red" />
-                    </LinearGradientBrush>
-                </lvc:Gauge.GaugeActiveFill>
-            </lvc:Gauge>
-        </materialDesign:Card>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
 
-        <materialDesign:Card
-            Grid.Row="0"
-            Grid.Column="2"
-            Margin="16"
-            Padding="32">
-            <lvc:Gauge
-                LabelsVisibility="Hidden"
-                Value="{Binding HumidityValue}"
-                From="40"
-                To="60">
-                <lvc:Gauge.GaugeActiveFill>
-                    <LinearGradientBrush>
-                        <GradientStop Offset="0.0" Color="Yellow" />
-                        <GradientStop Offset="0.5" Color="Orange" />
-                        <GradientStop Offset="1.0" Color="Red" />
-                    </LinearGradientBrush>
-                </lvc:Gauge.GaugeActiveFill>
-            </lvc:Gauge>
-        </materialDesign:Card>
+                <materialDesign:Card
+                    Grid.Row="1"
+                    Margin="16"
+                    Padding="32" />
 
-        <materialDesign:Card
-            Grid.Row="1"
-            Grid.RowSpan="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            Margin="16,0,16,16"
-            Padding="32">
+            </Grid>
 
             <lvc:CartesianChart
                 Grid.Row="1"
                 Grid.RowSpan="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Margin="25"
+                Margin="16"
                 AnimationsSpeed="0:0:0.5"
                 DataTooltip="{x:Null}"
                 Hoverable="False">
@@ -124,6 +74,24 @@
                     </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
-        </materialDesign:Card>
+
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+
+            <materialDesign:Card
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Margin="16,0,16,16"
+                Padding="32" />
+        </Grid>
     </Grid>
 </UserControl>

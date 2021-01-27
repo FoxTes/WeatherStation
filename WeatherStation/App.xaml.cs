@@ -31,7 +31,7 @@ namespace WeatherStation
         {
             containerRegistry.RegisterSingleton<ICommunicationService, CommunicationService>();
             containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
-            containerRegistry.RegisterSingleton<ISqliteService, SqliteService>();
+            containerRegistry.Register<ISqliteService, SqliteService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

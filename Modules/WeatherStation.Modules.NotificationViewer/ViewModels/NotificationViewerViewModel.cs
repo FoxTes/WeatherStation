@@ -8,7 +8,7 @@ namespace WeatherStation.Modules.NotificationViewer.ViewModels
     public class NotificationViewerViewModel : BindableBase
     {
         #region Filed
-        private readonly INotificationService _notificationService = null;
+        private readonly INotificationService _notificationService;
         #endregion
 
         #region Property

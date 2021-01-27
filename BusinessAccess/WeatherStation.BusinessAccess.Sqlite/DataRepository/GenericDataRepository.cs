@@ -12,9 +12,10 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
     {
         public virtual async Task<IList<T>> GetAllAsync(params Expression<Func<T, object>>[] navigationProperties)
         {
+            using var context = new SqliteContext();
+
             var task = Task.Run(() =>
             {
-                var context = new SqliteContext();
                 IQueryable<T> dbQuery = context.Set<T>();
 
                 foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)

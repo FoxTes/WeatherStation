@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using WeatherStation.BusinessAccess.Sqlite;
 using WeatherStation.BusinessAccess.Sqlite.Data;
 using WeatherStation.BusinessAccess.Sqlite.Model;
 
 namespace WeatherStation.Modules.Archives.ViewModels
 {
-    public class ArchivesViewModel : BindableBase
+    public class ArchivesViewModel : BindableBase, INavigationAware
     {
         #region Filed
         private readonly ISqliteService _sqliteService;
@@ -45,7 +46,23 @@ namespace WeatherStation.Modules.Archives.ViewModels
 
             var data = await _sqliteService.DeviceRecord.GetAllAsync();
 
+            var temp = data.Select(x => x);
+
             TestBox = "Закончиили";
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -11,8 +11,6 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
     public class RealtimeDataViewerViewModel : BindableBase
     {
         #region Filed
-        private readonly ICommunicationService _communicationService = null;
-
         private double _temperatureValue = 0;
         private double _pressureValue = 0;
         private double _humidityValue = 0;
@@ -54,8 +52,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         #region Constructor
         public RealtimeDataViewerViewModel(ICommunicationService communicationService)
         {
-            _communicationService = communicationService;
-            _communicationService.DataRecived += DataRecivedEvent;
+            communicationService.DataRecived += DataRecivedEvent;
 
             var mapper = Mappers.Xy<MeasureModel>()
                 .X(model => model.DateTime.Ticks)   
