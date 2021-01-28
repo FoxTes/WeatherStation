@@ -12,7 +12,7 @@ using WeatherStation.BusinessAccess.Sqlite.Model;
 
 namespace WeatherStation.Modules.Archives.ViewModels
 {
-    public class ArchivesViewModel : BindableBase, INavigationAware
+    public class ArchivesViewModel : BindableBase
     {
         #region Filed
         private readonly ISqliteService _sqliteService;
@@ -49,20 +49,6 @@ namespace WeatherStation.Modules.Archives.ViewModels
             var temp = data.Select(x => x);
 
             TestBox = "Закончиили";
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

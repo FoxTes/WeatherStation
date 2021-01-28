@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using WeatherStation.BusinessAccess.Sqlite.Data;
 
 namespace WeatherStation.BusinessAccess.Sqlite.Managers
 {

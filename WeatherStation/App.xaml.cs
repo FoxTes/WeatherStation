@@ -1,7 +1,9 @@
 ﻿using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using Prism.Ioc;
 using Prism.Modularity;
 using WeatherStation.BusinessAccess.Sqlite;
+using WeatherStation.BusinessAccess.Sqlite.Data;
 using WeatherStation.Modules.Archives;
 using WeatherStation.Modules.ConnectionDevice;
 using WeatherStation.Modules.NotificationViewer;
@@ -29,9 +31,11 @@ namespace WeatherStation
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<SqliteContext>();
+
             containerRegistry.RegisterSingleton<ICommunicationService, CommunicationService>();
             containerRegistry.RegisterSingleton<INotificationService, NotificationService>();
-            containerRegistry.Register<ISqliteService, SqliteService>();
+            containerRegistry.RegisterSingleton<ISqliteService, SqliteService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

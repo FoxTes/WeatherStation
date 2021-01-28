@@ -67,7 +67,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         }
         #endregion
 
-        private void DataRecivedEvent(object sender, DataReciveDto e)
+        private void DataRecivedEvent(object sender, DataReciveEventArgs e)
         {
             TemperatureValue = e.Temperature;
             PressureValue = e.AtmosphericPressure;

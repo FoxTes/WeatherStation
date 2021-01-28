@@ -66,7 +66,7 @@ namespace WeatherStation.Modules.ConnectionDevice.ViewModels
             }        
         }
 
-        private void DataRecived(object sender, DataReciveDto e)
+        private void DataRecived(object sender, DataReciveEventArgs e)
         {
             CountReciveFrameLabel = $"Кол-во принятых посылок: {++_countReciveFrame}";
         }
