@@ -86,10 +86,9 @@ namespace WeatherStation.ViewModels
             {
                 DialogsIsOpen = false;
 
-                if (e == ConnectionStatus.Connect)
-                    _notificationService.ShowMessage($"Найдено устройство.");
-                else
-                    _notificationService.ShowMessage("Устройство не найдено.");
+                _notificationService.ShowMessage(e == ConnectionStatus.Connect
+                    ? $"Найдено устройство."
+                    : "Устройство не найдено.");
             }
             else
                 if (e == ConnectionStatus.Disconnect)
