@@ -1,14 +1,13 @@
-﻿using System.Windows;
-using Microsoft.EntityFrameworkCore;
-using Prism.Ioc;
+﻿using Prism.Ioc;
 using Prism.Modularity;
+using System.Windows;
 using WeatherStation.BusinessAccess.Sqlite;
-using WeatherStation.BusinessAccess.Sqlite.Data;
+using WeatherStation.BusinessAccess.Sqlite.Database;
 using WeatherStation.Modules.Archives;
 using WeatherStation.Modules.ConnectionDevice;
 using WeatherStation.Modules.NotificationViewer;
 using WeatherStation.Modules.RealtimeDataViewer;
-using WeatherStation.Services.CommunicationService;
+using WeatherStation.Services.Communication;
 using WeatherStation.Services.Notification;
 using WeatherStation.Views;
 
@@ -19,16 +18,6 @@ namespace WeatherStation
     /// </summary>
     public partial class App
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-        }
-
-        protected override void OnExit(ExitEventArgs e)
-        {
-            base.OnExit(e);
-        }
-
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<SqliteContext>();

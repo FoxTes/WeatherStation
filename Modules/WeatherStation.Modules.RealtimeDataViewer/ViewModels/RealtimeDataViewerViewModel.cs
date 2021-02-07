@@ -3,8 +3,8 @@ using LiveCharts.Configurations;
 using Prism.Mvvm;
 using System;
 using WeatherStation.Modules.RealtimeDataViewer.Model;
-using WeatherStation.Services.CommunicationService;
-using WeatherStation.Services.CommunicationService.Model;
+using WeatherStation.Services.Communication;
+using WeatherStation.Services.Communication.Model;
 
 namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
 {
@@ -52,7 +52,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         #region Constructor
         public RealtimeDataViewerViewModel(ICommunicationService communicationService)
         {
-            communicationService.DataRecived += DataRecivedEvent;
+            communicationService.DataReceived += DataRecivedEvent;
 
             var mapper = Mappers.Xy<MeasureModel>()
                 .X(model => model.DateTime.Ticks)   
@@ -67,7 +67,7 @@ namespace WeatherStation.Modules.RealtimeDataViewer.ViewModels
         }
         #endregion
 
-        private void DataRecivedEvent(object sender, DataReciveEventArgs e)
+        private void DataRecivedEvent(object sender, DataReceiveEventArgs e)
         {
             TemperatureValue = e.Temperature;
             PressureValue = e.AtmosphericPressure;

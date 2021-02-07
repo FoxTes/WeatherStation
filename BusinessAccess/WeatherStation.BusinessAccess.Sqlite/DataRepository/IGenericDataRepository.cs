@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using WeatherStation.BusinessAccess.Sqlite.Data;
 
-namespace WeatherStation.BusinessAccess.Sqlite.Managers
+namespace WeatherStation.BusinessAccess.Sqlite.DataRepository
 {
     /// <summary>
     /// Базовое представление для всех сущностей в БД.

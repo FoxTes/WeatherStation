@@ -1,4 +1,4 @@
-﻿using WeatherStation.BusinessAccess.Sqlite.Managers;
+﻿using WeatherStation.BusinessAccess.Sqlite.DataRepository.Impl;
 
 namespace WeatherStation.BusinessAccess.Sqlite
 {

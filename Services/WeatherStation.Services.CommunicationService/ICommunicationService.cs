@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using WeatherStation.Services.CommunicationService.Enum;
-using WeatherStation.Services.CommunicationService.Model;
+using WeatherStation.Services.Communication.Enum;
+using WeatherStation.Services.Communication.Model;
 
-namespace WeatherStation.Services.CommunicationService
+namespace WeatherStation.Services.Communication
 {
     public interface ICommunicationService
     {
         /// <summary>
         /// Событие, возникающие при приеме данных от прибора.
         /// </summary>
-        event EventHandler<DataReciveEventArgs> DataRecived;
+        event EventHandler<DataReceiveEventArgs> DataReceived;
 
         /// <summary>
         /// Событие, возникающие при изменении статуса подключения прибора.
@@ -29,6 +29,6 @@ namespace WeatherStation.Services.CommunicationService
         /// <param name="cancellationToken">Токен для отмены операции.</param>
         /// <param name="progress">Прогресс поиска.</param>
         /// <returns>Имя устройства.</returns>
-        Task<string> SeachDeviceAsync(CancellationToken cancellationToken, IProgress<byte> progress = null);
+        Task<string> SearchDeviceAsync(CancellationToken cancellationToken, IProgress<byte> progress = null);
     }
 }

@@ -2,16 +2,16 @@
 using System.IO.Ports;
 using System.Threading;
 using System.Threading.Tasks;
-using WeatherStation.Services.CommunicationService.Enum;
-using WeatherStation.Services.CommunicationService.Model;
+using WeatherStation.Services.Communication.Enum;
+using WeatherStation.Services.Communication.Model;
 
-namespace WeatherStation.Services.CommunicationService
+namespace WeatherStation.Services.Communication
 {
     public class CommunicationService : ICommunicationService
     {
         #region Event
         public event EventHandler<ConnectionStatus> ConnectionChanged;
-        public event EventHandler<DataReciveEventArgs> DataRecived;
+        public event EventHandler<DataReceiveEventArgs> DataReceived;
         #endregion
 
         #region Filed
@@ -52,17 +52,17 @@ namespace WeatherStation.Services.CommunicationService
             }
             else
             {
-                var dataToSend = new DataReciveEventArgs
+                var dataToSend = new DataReceiveEventArgs
                 { 
                     Temperature = BitConverter.ToSingle(data, 3), 
                     AtmosphericPressure = BitConverter.ToSingle(data, 7),
                     Humidity = BitConverter.ToSingle(data, 11),
                 };
-                DataRecived?.Invoke(this, dataToSend);
+                DataReceived?.Invoke(this, dataToSend);
             }
         }
 
-        public async Task<string> SeachDeviceAsync(CancellationToken cancellationToken, IProgress<byte> progress = null)
+        public async Task<string> SearchDeviceAsync(CancellationToken cancellationToken, IProgress<byte> progress = null)
         {
             foreach (var namePort in SerialPort.GetPortNames())
             {

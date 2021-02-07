@@ -1,14 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
+using System.Linq;
 using WeatherStation.BusinessAccess.Sqlite;
-using WeatherStation.BusinessAccess.Sqlite.Data;
-using WeatherStation.BusinessAccess.Sqlite.Model;
 
 namespace WeatherStation.Modules.Archives.ViewModels
 {
@@ -23,11 +16,11 @@ namespace WeatherStation.Modules.Archives.ViewModels
         #region Property
         public string TestBox
         {
-            get { return _testBox; }
-            set { SetProperty(ref _testBox, value); }
+            get => _testBox;
+            set => SetProperty(ref _testBox, value);
         }
 
-        public DelegateCommand TestReadDatabase { get; private set; }
+        public DelegateCommand TestReadDatabase { get; }
         #endregion
 
         #region Constructor
@@ -45,10 +38,12 @@ namespace WeatherStation.Modules.Archives.ViewModels
             TestBox = "Начали";
 
             var data = await _sqliteService.DeviceRecord.GetAllAsync();
+            var data1 = await _sqliteService.DeviceRecord.GetAllAsync();
 
             var temp = data.Select(x => x);
+            var temp1 = data1.Select(x => x);
 
-            TestBox = "Закончиили";
+            TestBox = "Закончили";
         }
         #endregion
     }

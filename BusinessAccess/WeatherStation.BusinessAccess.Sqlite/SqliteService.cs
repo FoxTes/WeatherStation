@@ -1,12 +1,11 @@
-﻿using WeatherStation.BusinessAccess.Sqlite.Data;
-using WeatherStation.BusinessAccess.Sqlite.Managers;
-using WeatherStation.BusinessAccess.Sqlite.Managers.Impl;
+﻿using WeatherStation.BusinessAccess.Sqlite.Database;
+using WeatherStation.BusinessAccess.Sqlite.DataRepository.Impl;
 
 namespace WeatherStation.BusinessAccess.Sqlite
 {
     public class SqliteService : ISqliteService
     {
-        private SqliteContext _sqliteContext;
+        private readonly SqliteContext _sqliteContext;
 
         public SqliteService(SqliteContext sqliteContext)
         {

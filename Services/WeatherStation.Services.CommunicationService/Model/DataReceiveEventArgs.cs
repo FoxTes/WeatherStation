@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WeatherStation.Services.CommunicationService.Model
+namespace WeatherStation.Services.Communication.Model
 {
-    public class DataReciveEventArgs : EventArgs
+    public class DataReceiveEventArgs : EventArgs
     {
         /// <summary>
         /// Температура воздуха.

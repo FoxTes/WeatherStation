@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using WeatherStation.BusinessAccess.Sqlite.Data;
+using WeatherStation.BusinessAccess.Sqlite.Database;
 
-namespace WeatherStation.BusinessAccess.Sqlite.Managers
+namespace WeatherStation.BusinessAccess.Sqlite.DataRepository
 {
     public class GenericDataRepository<T> : IGenericDataRepository<T> where T : class
     {
-        private SqliteContext _sqliteContext;
+        private readonly SqliteContext _sqliteContext;
 
         public GenericDataRepository(SqliteContext sqliteContext)
         {
@@ -23,10 +23,8 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
             {
                 IQueryable<T> dbQuery = _sqliteContext.Set<T>();
 
-                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                    dbQuery = dbQuery.Include(navigationProperty);
-
-                return dbQuery;
+                return navigationProperties.Aggregate(dbQuery, (current, navigationProperty) 
+                        => current.Include(navigationProperty));
             });
 
             await Task.WhenAll(task).ConfigureAwait(false);
@@ -41,8 +39,8 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
             using var context = new SqliteContext();
             IQueryable<T> dbQuery = context.Set<T>();
 
-            foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                dbQuery = dbQuery.Include(navigationProperty);
+            dbQuery = navigationProperties.Aggregate(dbQuery, (current, navigationProperty) 
+                    => current.Include(navigationProperty));
 
             return dbQuery.AsNoTracking()
                           .ToList();
@@ -53,28 +51,27 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
             using var context = new SqliteContext();
             IQueryable<T> dbQuery = context.Set<T>();
 
-            foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                dbQuery = dbQuery.Include(navigationProperty);
+            dbQuery = navigationProperties.Aggregate(dbQuery, (current, navigationProperty) 
+                    => current.Include(navigationProperty));
 
             return dbQuery.AsNoTracking()
+                          .AsEnumerable()
                           .Where(where)
                           .ToList();
         }
 
         public virtual T GetSingle(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
         {
-            T item = null;
-            using (var context = new SqliteContext())
-            {
-                IQueryable<T> dbQuery = context.Set<T>();
+            using var context = new SqliteContext();
 
-                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
-                    dbQuery = dbQuery.Include(navigationProperty);
+            IQueryable<T> dbQuery = context.Set<T>();
 
-                item = dbQuery
-                    .AsNoTracking()
-                    .FirstOrDefault(where);
-            }
+            dbQuery = navigationProperties.Aggregate(dbQuery, (current, navigationProperty) 
+                    => current.Include(navigationProperty));
+
+            var item = dbQuery
+                .AsNoTracking()
+                .FirstOrDefault(@where);
             return item;
         }
 
@@ -82,7 +79,7 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
         {
             using var context = new SqliteContext();
 
-            foreach (T item in items)
+            foreach (var item in items)
                 context.Entry(item).State = EntityState.Added;
             context.SaveChanges();
         }
@@ -92,7 +89,7 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
         {
             using var context = new SqliteContext();
 
-            foreach (T item in items)
+            foreach (var item in items)
                 context.Entry(item).State = EntityState.Deleted;
             context.SaveChanges();
         }
@@ -101,7 +98,7 @@ namespace WeatherStation.BusinessAccess.Sqlite.Managers
         {
             using var context = new SqliteContext();
 
-            foreach (T item in items)
+            foreach (var item in items)
                 context.Entry(item).State = EntityState.Modified;
             context.SaveChanges();
         }

@@ -12,21 +12,21 @@ namespace WeatherStation.Modules.NotificationViewer.ViewModels
         #endregion
 
         #region Property
-        public SnackbarMessageQueue MessageQueue { get; private set; }
+        public SnackbarMessageQueue MessageQueue { get; }
         #endregion
 
         #region Contructor
         public NotificationViewerViewModel(INotificationService notificationService)
         {
             _notificationService = notificationService;
-            _notificationService.MessageRecived += MessageRecivedEvent;
+            _notificationService.MessageRecived += MessageReceivedEvent;
 
             MessageQueue = new SnackbarMessageQueue(TimeSpan.FromMilliseconds(1000));
         }
         #endregion
 
         #region Method
-        private void MessageRecivedEvent(object sender, string content)
+        private void MessageReceivedEvent(object sender, string content)
         {
             MessageQueue.Enqueue(content);
         }

@@ -1,15 +1,11 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
-
 using MaterialDesignThemes.Wpf;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using WeatherStation.Core;
-using WeatherStation.Services.CommunicationService;
-using WeatherStation.Services.CommunicationService.Enum;
+using WeatherStation.Services.Communication;
+using WeatherStation.Services.Communication.Enum;
 using WeatherStation.Services.Notification;
 
 namespace WeatherStation.ViewModels
@@ -17,21 +13,21 @@ namespace WeatherStation.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         #region Filed
-        private readonly IRegionManager _regionManager = null;
-        private readonly IEventAggregator _eventAggregator = null;
-        private readonly INotificationService _notificationService = null;
-        private readonly ICommunicationService _communicationService = null;
+        private readonly IRegionManager _regionManager;
+        private readonly IEventAggregator _eventAggregator;
+        private readonly INotificationService _notificationService;
+        private readonly ICommunicationService _communicationService;
 
-        private bool _dialogsIsOpen = false;
+        private bool _dialogsIsOpen;
         private bool _darkModeIsEnable = true;
         #endregion
 
         #region Property
         public SnackbarMessageQueue MessageQueue { get; private set; }
 
-        public DelegateCommand SeachDevice { get; private set; }
+        public DelegateCommand SeachDevice { get; }
 
-        public DelegateCommand ChangeTheme { get; private set; }
+        public DelegateCommand ChangeTheme { get; }
         public bool DarkModeIsEnable
         {
             get => _darkModeIsEnable; 
@@ -61,7 +57,7 @@ namespace WeatherStation.ViewModels
                 }
                 return _selectItem; 
             }
-            set { SetProperty(ref _selectItem, value); }
+            set => SetProperty(ref _selectItem, value);
         }
         #endregion
 
@@ -91,18 +87,18 @@ namespace WeatherStation.ViewModels
                 DialogsIsOpen = false;
 
                 _notificationService.ShowMessage(e == ConnectionStatus.Connect
-                    ? $"Найдено устройство."
+                    ? "Найдено устройство."
                     : "Устройство не найдено.");
             }
             else
                 if (e == ConnectionStatus.Disconnect)
-                    _notificationService.ShowMessage($"Связь с устройством потеряна!");
+                    _notificationService.ShowMessage("Связь с устройством потеряна!");
         }
 
         private void SendMessage()
         {
             if (_communicationService.IsConnected)
-                _notificationService.ShowMessage($"Устройство уже подключено!");
+                _notificationService.ShowMessage("Устройство уже подключено!");
             else
             {
                 DialogsIsOpen = true;

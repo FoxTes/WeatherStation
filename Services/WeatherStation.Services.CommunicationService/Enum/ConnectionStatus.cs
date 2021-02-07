@@ -1,4 +1,4 @@
-﻿namespace WeatherStation.Services.CommunicationService.Enum
+﻿namespace WeatherStation.Services.Communication.Enum
 {
     public enum ConnectionStatus
     {
