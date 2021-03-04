@@ -10,21 +10,15 @@ namespace WeatherStation.BusinessAccess.Sqlite.DataRepository
 {
     public class GenericDataRepository<T> : IGenericDataRepository<T> where T : class
     {
-        private readonly SqliteContext _sqliteContext;
-
-        public GenericDataRepository(SqliteContext sqliteContext)
-        {
-            _sqliteContext = sqliteContext;
-        }
-
         public virtual async Task<IList<T>> GetAllAsync(params Expression<Func<T, object>>[] navigationProperties)
         {
             var task = Task.Run(() =>
             {
-                IQueryable<T> dbQuery = _sqliteContext.Set<T>();
+                using var context = new SqliteContext();
+                IQueryable<T> dbQuery = context.Set<T>();
 
                 return navigationProperties.Aggregate(dbQuery, (current, navigationProperty) 
-                        => current.Include(navigationProperty));
+                    => current.Include(navigationProperty));
             });
 
             await Task.WhenAll(task).ConfigureAwait(false);

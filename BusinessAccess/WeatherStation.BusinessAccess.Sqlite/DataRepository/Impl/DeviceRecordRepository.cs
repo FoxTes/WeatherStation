@@ -5,9 +5,6 @@ namespace WeatherStation.BusinessAccess.Sqlite.DataRepository.Impl
 {
     internal class DeviceRecordRepository : GenericDataRepository<DeviceRecord>, IDeviceRecordRepository 
     {
-        public DeviceRecordRepository(SqliteContext sqliteContext) : base (sqliteContext)
-        {
-
-        }
+        
     }
 }
